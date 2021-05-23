@@ -1,0 +1,13 @@
+object FSplash: TFSplash
+  Left = 0
+  Top = 0
+  Caption = 'Cedup'
+  ClientHeight = 492
+  ClientWidth = 338
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  DesignerMasterStyle = 3
+end

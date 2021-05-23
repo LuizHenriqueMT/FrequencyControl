@@ -5,15 +5,13 @@ uses
   FMX.Forms,
   ULogin in 'ULogin.pas' {FLogin},
   UPrincipal in 'UPrincipal.pas' {FPrincipal},
-  UModulo in 'UModulo.pas' {Modulo: TDataModule},
-  USplash in 'USplash.pas' {FSplash};
+  UModulo in 'UModulo.pas' {Modulo: TDataModule};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.CreateForm(TModulo, Modulo);
-  Application.CreateForm(TFSplash, FSplash);
   Application.CreateForm(TFLogin, FLogin);
   //Application.CreateForm(TFPrincipal, FPrincipal);
 

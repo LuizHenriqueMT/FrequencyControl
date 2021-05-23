@@ -1,12 +1,6 @@
-﻿[LayoutSenha]
-Coordinates=479,344,79,33
-
-[edtUsuario]
+﻿[edtUsuario]
 Coordinates=392,344,68,51
 Visible=True
-
-[rnrSenha]
-Coordinates=209,412,59,33
 
 [imgUsuario]
 Coordinates=302,344,70,51
@@ -17,35 +11,8 @@ Coordinates=224,344,60,51
 [lbRodape]
 Coordinates=755,276,61,51
 
-[LayoutAcesso]
-Coordinates=286,412,84,33
-
 [LogoCedup]
 Coordinates=664,276,71,51
-
-[LayoutLogin]
-Coordinates=771,344,76,33
-
-[rnrUsuario]
-Coordinates=686,344,66,33
-
-[lbEsqueci]
-Coordinates=144,344,62,51
-
-[imgCadeado]
-Coordinates=245,276,76,51
-
-[rnrEntrar]
-Coordinates=10,412,58,33
-
-[edtSenha]
-Coordinates=592,10,60,51
-
-[LayoutUsuario]
-Coordinates=579,344,86,33
-
-[imgVisualizacao]
-Coordinates=127,276,94,51
 
 [StyleBook]
 Coordinates=17,269,64,33
@@ -90,5 +57,29 @@ Coordinates=558,350,133,33
 Coordinates=671,10,131,51
 
 []
-Coordinates=85,412,101,33
+Coordinates=479,344,79,33
+
+[layTelaLogin]
+Coordinates=771,344,76,33
+
+[layAcoesLogin]
+Coordinates=286,412,84,33
+
+[bckGrndUsuario]
+Coordinates=686,344,66,33
+
+[layUsuario]
+Coordinates=579,344,86,33
+
+[imgSenha]
+Coordinates=245,276,76,51
+
+[imgVisualizacaoSenha]
+Coordinates=127,276,94,51
+
+[bckGrndEntrar]
+Coordinates=10,412,58,33
+
+[btnEsqueciSenha]
+Coordinates=144,344,62,51
 

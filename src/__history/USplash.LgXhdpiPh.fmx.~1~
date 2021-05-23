@@ -1,0 +1,9 @@
+inherited FSplash_LgXhdpiPh: TFSplash_LgXhdpiPh
+  ClientHeight = 695
+  ClientWidth = 450
+  DesignerMasterStyle = 3
+  inherited Tempo: TTimer [0]
+  end
+  inherited Progresso: TProgressBar [1]
+  end
+end

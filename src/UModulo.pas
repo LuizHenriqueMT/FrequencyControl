@@ -31,7 +31,6 @@ type
     queryAlunoMATRICULA_ALUNO: TIntegerField;
     queryAlunoID_TURMA: TIntegerField;
     queryAlunoNOME_ALUNO: TStringField;
-    queryAlunoCPF_ALUNO: TLargeintField;
     queryAlunoLIDER_ALUNO: TStringField;
     queryAlunoSEXO_ALUNO: TStringField;
     queryAlunoSTATUS_ALUNO: TStringField;
@@ -39,13 +38,15 @@ type
     queryAlunoEMAIL_ALUNO: TStringField;
     queryProfessorMATRICULA_PROFESSOR: TIntegerField;
     queryProfessorNOME_PROFESSOR: TStringField;
-    queryProfessorCPF_PROFESSOR: TLargeintField;
     queryProfessorCARGAHORA_PROFESSOR: TTimeField;
     queryProfessorSEXO_PROFESSOR: TStringField;
     queryProfessorSENHA_PROFESSOR: TStringField;
     queryProfessorEMAIL_PROFESSOR: TStringField;
     queryProfessorFLAG_PROFESSOR: TStringField;
     queryGeralCURDATE: TDateField;
+    queryProfessorCPF_PROFESSOR: TStringField;
+    queryAlunoNASC_ALUNO: TDateField;
+    queryAlunoCPF_ALUNO: TStringField;
   private
     { Private declarations }
   public

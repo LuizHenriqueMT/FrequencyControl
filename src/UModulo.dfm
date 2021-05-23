@@ -5,14 +5,16 @@ object Modulo: TModulo
   object Conexao: TUniConnection
     ProviderName = 'MySQL'
     Port = 3306
-    Database = 'luiz.hmt_frequencycontrol'
-    Username = 'luiz.hmt'
-    Server = '189.8.214.4'
+    Database = 'FrequencyControl'
+    Username = 'luiztiscoski'
+    Server = 'frequencycontrol.cqcsqj87hfrd.us-east-2.rds.amazonaws.com'
     Connected = True
     LoginPrompt = False
     Left = 40
     Top = 40
-    EncryptedPassword = '93FF8AFF96FF85FFCDFFCCFFC8FFCBFFCBFFCEFFCFFFCBFF'
+    EncryptedPassword = 
+      '93FF8AFF96FF85FF98FF9EFF8BFF90FFCEFFCFFFCFFFCEFFDCFFC8FFCEFF97FF' +
+      '9BFF'
   end
   object ProviderAluno: TMySQLUniProvider
     Left = 40
@@ -38,6 +40,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'Select * from ALUNO'
       '')
+    Active = True
     Left = 40
     Top = 104
     object queryAlunoMATRICULA_ALUNO: TIntegerField
@@ -51,13 +54,15 @@ object Modulo: TModulo
       FieldName = 'NOME_ALUNO'
       Size = 45
     end
-    object queryAlunoCPF_ALUNO: TLargeintField
+    object queryAlunoCPF_ALUNO: TStringField
       FieldName = 'CPF_ALUNO'
+      FixedChar = True
+      Size = 11
     end
     object queryAlunoLIDER_ALUNO: TStringField
       FieldName = 'LIDER_ALUNO'
       FixedChar = True
-      Size = 1
+      Size = 5
     end
     object queryAlunoSEXO_ALUNO: TStringField
       FieldName = 'SEXO_ALUNO'
@@ -76,6 +81,10 @@ object Modulo: TModulo
     object queryAlunoEMAIL_ALUNO: TStringField
       FieldName = 'EMAIL_ALUNO'
       Size = 100
+    end
+    object queryAlunoNASC_ALUNO: TDateField
+      FieldName = 'NASC_ALUNO'
+      Required = True
     end
   end
   object dsAluno: TUniDataSource
@@ -101,6 +110,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'Select *'
       'From PROFESSOR')
+    Active = True
     Left = 136
     Top = 104
     object queryProfessorMATRICULA_PROFESSOR: TIntegerField
@@ -111,8 +121,10 @@ object Modulo: TModulo
       FieldName = 'NOME_PROFESSOR'
       Size = 45
     end
-    object queryProfessorCPF_PROFESSOR: TLargeintField
+    object queryProfessorCPF_PROFESSOR: TStringField
       FieldName = 'CPF_PROFESSOR'
+      FixedChar = True
+      Size = 11
     end
     object queryProfessorCARGAHORA_PROFESSOR: TTimeField
       FieldName = 'CARGAHORA_PROFESSOR'

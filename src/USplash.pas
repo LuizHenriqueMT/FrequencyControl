@@ -9,10 +9,6 @@ uses
 
 type
   TFSplash = class(TForm)
-    Tempo: TTimer;
-    Progresso: TProgressBar;
-    procedure FormActivate(Sender: TObject);
-    procedure TempoTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,24 +25,5 @@ implementation
 
 uses ULogin;
 {$R *.iPhone55in.fmx IOS}
-
-procedure TFSplash.FormActivate(Sender: TObject);
-begin
-          Tempo.Enabled := true;
-end;
-
-procedure TFSplash.TempoTimer(Sender: TObject);
-begin
-      If Progresso.Value = 100 then
-        Begin
-          Tempo.Enabled := False;
-          FSplash.Hide;
-          FLogin.Show;
-          FSplash.ReleaseForm;
-        End;
-
-      // Vai contando
-      Progresso.Value := Progresso.Value + 1;
-end;
 
 end.

@@ -9,26 +9,34 @@ uses
 
 type
   TFLogin = class(TForm)
-    LayoutLogin: TLayout;
-    LayoutUsuario: TLayout;
-    rnrUsuario: TRoundRect;
+    layTelaLogin: TLayout;
+    layUsuario: TLayout;
+    bckGrndUsuario: TRoundRect;
     edtUsuario: TEdit;
     imgUsuario: TImage;
-    LayoutSenha: TLayout;
-    rnrSenha: TRoundRect;
-    edtSenha: TEdit;
-    imgCadeado: TImage;
-    imgVisualizacao: TImage;
-    LayoutAcesso: TLayout;
-    rnrEntrar: TRoundRect;
+    imgSenha: TImage;
+    imgVisualizacaoSenha: TImage;
+    layAcoesLogin: TLayout;
+    bckGrndEntrar: TRoundRect;
     btnEntrar: TLabel;
-    lbEsqueci: TLabel;
+    btnEsqueciSenha: TLabel;
     LogoCedup: TImage;
     lbRodape: TLabel;
     StyleBook: TStyleBook;
-    Layout1: TLayout;
+    layLogin: TLayout;
+    layLogo: TLayout;
+    layImgUsuario: TLayout;
+    layEntradaUsuario: TLayout;
+    layEditUsuario: TLayout;
+    laySenha: TLayout;
+    layEntradaSenha: TLayout;
+    bckGrndSenha: TRoundRect;
+    layEditSenha: TLayout;
+    edtSenha: TEdit;
+    layImgSenha: TLayout;
+    layVisualizacaoSenha: TLayout;
     procedure btnEntrarClick(Sender: TObject);
-    procedure imgVisualizacaoClick(Sender: TObject);
+    procedure imgVisualizacaoSenhaClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -44,7 +52,9 @@ var
 implementation
 
 {$R *.fmx}
+{$R *.SmXhdpiPh.fmx ANDROID}
 {$R *.LgXhdpiPh.fmx ANDROID}
+{$R *.NmXhdpiPh.fmx ANDROID}
 
 uses UModulo, UPrincipal;
 
@@ -145,7 +155,7 @@ begin
 
 end;
 
-procedure TFLogin.imgVisualizacaoClick(Sender: TObject);
+procedure TFLogin.imgVisualizacaoSenhaClick(Sender: TObject);
 begin
       if (edtSenha.Password = true) then
         edtSenha.Password:= false

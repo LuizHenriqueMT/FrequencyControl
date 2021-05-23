@@ -5,14 +5,8 @@
     </ProjectExtensions>
     <PropertyGroup>
         <DeviceId Condition="'$(Platform)'=='Android'">2a2f9667</DeviceId>
-        <DeviceId Condition="'$(Platform)'=='Android64'"/>
-        <DeviceId Condition="'$(Platform)'=='iOSDevice32'"/>
-        <DeviceId Condition="'$(Platform)'=='iOSDevice64'"/>
-        <DeviceId Condition="'$(Platform)'=='iOSSimulator'">iPhone</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='Android64'">2a2f9667</DeviceId>
     </PropertyGroup>
-    <ItemGroup Condition="'$(Platform)'=='iOSDevice64'"/>
-    <ItemGroup Condition="'$(Platform)'=='Win64'"/>
-    <ItemGroup Condition="'$(Platform)'=='iOSDevice32'"/>
     <ItemGroup Condition="'$(Platform)'=='Win32'">
         <DeployFile Include="Win32\Debug\CedupFrequencia.exe" Condition="'$(Config)'=='Debug'">
             <RemoteDir>CedupFrequencia\</RemoteDir>
@@ -25,6 +19,7 @@
             <Required>True</Required>
         </DeployFile>
     </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Win64'"/>
     <ItemGroup Condition="'$(Platform)'=='Android'">
         <DeployFile Include="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_36x36.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>CedupFrequencia\res\drawable-ldpi\</RemoteDir>
@@ -54,7 +49,7 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
-        <DeployFile Include="..\Imagens\Telas\Splash\9patch 960x720.9.png" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="..\Img\Telas\Splash\9patch 960x720.9.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>CedupFrequencia\res\drawable-xlarge\</RemoteDir>
             <RemoteName>splash_image_def.9.png</RemoteName>
             <DeployClass>Android_SplashImage960</DeployClass>
@@ -171,7 +166,7 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\Imagens\Telas\Splash\9patch 426x320.9.png" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="..\Img\Telas\Splash\9patch 426x320.9.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>CedupFrequencia\res\drawable-small\</RemoteDir>
             <RemoteName>splash_image_def.9.png</RemoteName>
             <DeployClass>Android_SplashImage426</DeployClass>
@@ -198,19 +193,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CedupFrequencia\library\lib\armeabi-v7a\</RemoteDir>
-            <RemoteName>gdbserver</RemoteName>
-            <DeployClass>AndroidGDBServer</DeployClass>
+        <DeployFile Include="..\Img\Telas\Splash\9patch 470x320.9.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CedupFrequencia\res\drawable-normal\</RemoteDir>
+            <RemoteName>splash_image_def.9.png</RemoteName>
+            <DeployClass>Android_SplashImage470</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\Imagens\Telas\Splash\9patch 470x320.9.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CedupFrequencia\res\drawable-normal\</RemoteDir>
-            <RemoteName>splash_image_def.9.png</RemoteName>
-            <DeployClass>Android_SplashImage470</DeployClass>
+        <DeployFile Include="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CedupFrequencia\library\lib\armeabi-v7a\</RemoteDir>
+            <RemoteName>gdbserver</RemoteName>
+            <DeployClass>AndroidGDBServer</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -225,7 +220,7 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\Imagens\Telas\Splash\9patch 640x480.9.png" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="..\Img\Telas\Splash\9patch 640x480.9.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>CedupFrequencia\res\drawable-large\</RemoteDir>
             <RemoteName>splash_image_def.9.png</RemoteName>
             <DeployClass>Android_SplashImage640</DeployClass>
@@ -238,26 +233,6 @@
             <RemoteDir>CedupFrequencia\res\values-v21\</RemoteDir>
             <RemoteName>styles.xml</RemoteName>
             <DeployClass>AndroidSplashStylesV21</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-    </ItemGroup>
-    <ItemGroup Condition="'$(Platform)'=='iOSSimulator'">
-        <DeployFile Include="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib">
-            <RemoteDir>CedupFrequencia.app\</RemoteDir>
-            <RemoteName>libcgunwind.1.0.dylib</RemoteName>
-            <DeployClass>DependencyModule</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(BDS)\Redist\iossimulator\libpcre.dylib">
-            <RemoteDir>CedupFrequencia.app\</RemoteDir>
-            <RemoteName>libpcre.dylib</RemoteName>
-            <DeployClass>DependencyModule</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
