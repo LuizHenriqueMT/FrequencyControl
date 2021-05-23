@@ -1,0 +1,26 @@
+object FSplash: TFSplash
+  Left = 0
+  Top = 0
+  Caption = 'Cedup'
+  ClientHeight = 492
+  ClientWidth = 338
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnActivate = FormActivate
+  DesignerMasterStyle = 3
+  object Progresso: TProgressBar
+    ControlType = Platform
+    Orientation = Horizontal
+    Position.X = 56.000000000000000000
+    Position.Y = 240.000000000000000000
+  end
+  object Tempo: TTimer
+    Enabled = False
+    Interval = 1
+    OnTimer = TempoTimer
+    Left = 224
+    Top = 232
+  end
+end

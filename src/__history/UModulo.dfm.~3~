@@ -1,0 +1,92 @@
+object Modulo: TModulo
+  OldCreateOrder = False
+  Height = 518
+  Width = 551
+  object Conexao: TUniConnection
+    ProviderName = 'MySQL'
+    Port = 3306
+    Database = 'controlfrequency'
+    Username = 'root'
+    Server = 'localhost'
+    Connected = True
+    LoginPrompt = False
+    Left = 48
+    Top = 40
+  end
+  object MySQLUniProvider1: TMySQLUniProvider
+    Left = 48
+    Top = 104
+  end
+  object UniTransaction1: TUniTransaction
+    DefaultConnection = Conexao
+    Left = 48
+    Top = 176
+  end
+  object UniStoredProc1: TUniStoredProc
+    Connection = Conexao
+    Left = 48
+    Top = 240
+  end
+  object UniSQL1: TUniSQL
+    Connection = Conexao
+    Left = 48
+    Top = 304
+  end
+  object UniQuery1: TUniQuery
+    Connection = Conexao
+    Left = 48
+    Top = 432
+  end
+  object UniDataSource1: TUniDataSource
+    Left = 48
+    Top = 368
+  end
+  object MySQLUniProvider2: TMySQLUniProvider
+    Left = 120
+    Top = 104
+  end
+  object UniTransaction2: TUniTransaction
+    Left = 120
+    Top = 176
+  end
+  object UniStoredProc2: TUniStoredProc
+    Left = 120
+    Top = 240
+  end
+  object UniSQL2: TUniSQL
+    Left = 120
+    Top = 304
+  end
+  object UniDataSource2: TUniDataSource
+    Left = 120
+    Top = 368
+  end
+  object UniQuery2: TUniQuery
+    Left = 120
+    Top = 432
+  end
+  object UniQuery3: TUniQuery
+    Left = 192
+    Top = 432
+  end
+  object UniDataSource3: TUniDataSource
+    Left = 192
+    Top = 368
+  end
+  object UniSQL3: TUniSQL
+    Left = 192
+    Top = 304
+  end
+  object UniStoredProc3: TUniStoredProc
+    Left = 192
+    Top = 240
+  end
+  object UniTransaction3: TUniTransaction
+    Left = 192
+    Top = 176
+  end
+  object MySQLUniProvider3: TMySQLUniProvider
+    Left = 192
+    Top = 104
+  end
+end

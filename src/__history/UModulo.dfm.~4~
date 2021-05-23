@@ -1,0 +1,133 @@
+object Modulo: TModulo
+  OldCreateOrder = False
+  Height = 518
+  Width = 551
+  object Conexao: TUniConnection
+    ProviderName = 'MySQL'
+    Port = 3306
+    Database = 'frequencycontrol'
+    Username = 'frequencycontrol'
+    Server = '189.8.214.4'
+    Connected = True
+    LoginPrompt = False
+    Left = 48
+    Top = 40
+    EncryptedPassword = 'CDFFCCFFC8FFCBFFCBFFCEFFCFFFCBFF'
+  end
+  object MySQLUniProvider1: TMySQLUniProvider
+    Left = 48
+    Top = 96
+  end
+  object UniTransaction1: TUniTransaction
+    DefaultConnection = Conexao
+    Left = 48
+    Top = 176
+  end
+  object UniStoredProc1: TUniStoredProc
+    Connection = Conexao
+    Left = 48
+    Top = 240
+  end
+  object USQLAluno: TUniSQL
+    Connection = Conexao
+    Left = 48
+    Top = 304
+  end
+  object queryAluno: TUniQuery
+    Connection = Conexao
+    SQL.Strings = (
+      'Select * from ALUNO')
+    Left = 48
+    Top = 432
+    object queryAlunoMATRICULA_ALUNO2: TIntegerField
+      FieldName = 'MATRICULA_ALUNO2'
+      Required = True
+    end
+    object queryAlunoID_TURMA2: TIntegerField
+      FieldName = 'ID_TURMA2'
+    end
+    object queryAlunoNOME_ALUNO: TStringField
+      FieldName = 'NOME_ALUNO'
+      Size = 45
+    end
+    object queryAlunoCPF_ALUNO: TIntegerField
+      FieldName = 'CPF_ALUNO'
+    end
+    object queryAlunoLIDER_ALUNO: TStringField
+      FieldName = 'LIDER_ALUNO'
+      FixedChar = True
+      Size = 1
+    end
+    object queryAlunoSEXO_ALUNO: TStringField
+      FieldName = 'SEXO_ALUNO'
+      FixedChar = True
+      Size = 1
+    end
+    object queryAlunoSTATUS_ALUNO: TStringField
+      FieldName = 'STATUS_ALUNO'
+      FixedChar = True
+      Size = 3
+    end
+    object queryAlunoSENHA_ALUNO: TStringField
+      FieldName = 'SENHA_ALUNO'
+      Size = 8
+    end
+    object queryAlunoEMAIL_ALUNO: TStringField
+      FieldName = 'EMAIL_ALUNO'
+      Size = 100
+    end
+  end
+  object UniDataSource1: TUniDataSource
+    DataSet = queryAluno
+    Left = 48
+    Top = 368
+  end
+  object MySQLUniProvider2: TMySQLUniProvider
+    Left = 120
+    Top = 104
+  end
+  object UniTransaction2: TUniTransaction
+    Left = 120
+    Top = 176
+  end
+  object UniStoredProc2: TUniStoredProc
+    Left = 120
+    Top = 240
+  end
+  object UniSQL2: TUniSQL
+    Left = 120
+    Top = 304
+  end
+  object UniDataSource2: TUniDataSource
+    Left = 120
+    Top = 368
+  end
+  object UniQuery2: TUniQuery
+    Left = 120
+    Top = 432
+  end
+  object UniQuery3: TUniQuery
+    Left = 192
+    Top = 432
+  end
+  object UniDataSource3: TUniDataSource
+    Left = 192
+    Top = 368
+  end
+  object UniSQL3: TUniSQL
+    Left = 192
+    Top = 304
+  end
+  object UniStoredProc3: TUniStoredProc
+    Left = 192
+    Top = 240
+  end
+  object UniTransaction3: TUniTransaction
+    Left = 192
+    Top = 176
+  end
+  object MySQLUniProvider3: TMySQLUniProvider
+    Left = 192
+    Top = 104
+  end
+end

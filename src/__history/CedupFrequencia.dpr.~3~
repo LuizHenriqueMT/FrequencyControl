@@ -1,0 +1,18 @@
+program CedupFrequencia;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  ULogin in 'ULogin.pas' {FLogin},
+  UPrincipal in 'UPrincipal.pas' {FPrincipal},
+  UModulo in 'UModulo.pas' {Modulo: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFLogin, FLogin);
+  Application.CreateForm(TFPrincipal, FPrincipal);
+  Application.CreateForm(TModulo, Modulo);
+  Application.Run;
+end.
