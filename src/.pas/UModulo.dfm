@@ -1,7 +1,7 @@
 object Modulo: TModulo
   OldCreateOrder = False
-  Height = 518
-  Width = 551
+  Height = 519
+  Width = 585
   object Conexao: TUniConnection
     ProviderName = 'MySQL'
     Port = 3306
@@ -185,11 +185,12 @@ object Modulo: TModulo
   object queryGeral: TUniQuery
     Connection = Conexao
     SQL.Strings = (
-      'Select CURDATE()')
+      'SET time_zone = '#39'-2:59'#39';'
+      'Select now();')
     Left = 480
     Top = 24
-    object queryGeralCURDATE: TDateField
-      FieldName = 'CURDATE()'
+    object queryGeralnow: TDateTimeField
+      FieldName = 'now()'
       ReadOnly = True
       Required = True
     end

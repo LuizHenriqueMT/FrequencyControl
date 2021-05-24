@@ -364,11 +364,11 @@ object FPrincipal: TFPrincipal
             object bckGrndDiaAtual: TRoundRect
               Align = Client
               Fill.Color = xFF504E4E
-              Margins.Left = 150.000000000000000000
+              Margins.Left = 130.000000000000000000
               Margins.Top = 3.000000000000000000
-              Margins.Right = 150.000000000000000000
+              Margins.Right = 130.000000000000000000
               Margins.Bottom = 3.000000000000000000
-              Size.Width = 140.000000000000000000
+              Size.Width = 180.000000000000000000
               Size.Height = 24.000000000000000000
               Size.PlatformDefault = False
               Stroke.Kind = None
@@ -376,12 +376,12 @@ object FPrincipal: TFPrincipal
               object lbDiaAtual: TLabel
                 Align = Center
                 StyledSettings = [Family, Size, Style]
-                Size.Width = 119.000000000000000000
+                Size.Width = 179.000000000000000000
                 Size.Height = 33.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.FontColor = claGainsboro
                 TextSettings.HorzAlign = Center
-                Text = 'XX/XX/XXXX'
+                Text = 'XX/XX/XXXX  XX:XX'
                 TabOrder = 0
               end
             end
@@ -1483,5 +1483,16 @@ object FPrincipal: TFPrincipal
       Size.PlatformDefault = False
       WrapMode = Place
     end
+  end
+  object TimerDateTime: TTimer
+    OnTimer = TimerDateTimeTimer
+    Left = 394
+    Top = 198
+  end
+  object TimerDadosQR: TTimer
+    Interval = 180000
+    OnTimer = TimerDadosQRTimer
+    Left = 394
+    Top = 254
   end
 end

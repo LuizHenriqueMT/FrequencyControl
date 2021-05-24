@@ -60,108 +60,110 @@ uses UModulo, UPrincipal;
 
 procedure TFLogin.btnEntrarClick(Sender: TObject);
 var
-      ConsultaUsuario1, ConsultaUsuario2: string;
+  ConsultaUsuario1, ConsultaUsuario2: string;
 begin
-      Application.CreateForm(TFPrincipal, FPrincipal);
-      // Verifica se o "USUARIO" está preenchido
-      if (edtUsuario.Text = '') then
+  Application.CreateForm(TFPrincipal, FPrincipal);
+
+  //Check if the "USUARIO" has been entered
+  if (edtUsuario.Text = '') then
+    begin
+      Showmessage ('"Usuário" inválido!');
+      edtUsuario.SetFocus;
+      exit
+    end;
+
+  //Check if the "SENHA" has been entered
+  if (edtSenha.Text = '') then
+    begin
+      ShowMessage ('"Senha" inválida!');
+      edtSenha.SetFocus;
+      exit
+    end;
+
+  //Check if the "USUARIO" and "SENHA" have been entered
+  if (edtUsuario.text <> '') and (edtSenha.Text <> '') then
+    begin
+      //Query to fetch the login by the "PROFESSOR"
+      ConsultaUsuario1:= '';
+      ConsultaUsuario1:= 'SELECT * FROM PROFESSOR ' +
+        'WHERE MATRICULA_PROFESSOR = ' + quotedSTR (edtUsuario.Text) +
+        ' AND SENHA_PROFESSOR = ' + quotedSTR (edtSenha.Text);
+
+      modulo.queryProfessor.close;
+      modulo.queryProfessor.SQL.Clear;
+      modulo.queryProfessor.SQL.Add(ConsultaUsuario1);
+      modulo.queryProfessor.open;
+
+      //Query to fetch the login by the "ALUNO"
+      ConsultaUsuario2:= '';
+      ConsultaUsuario2:= 'SELECT * FROM ALUNO ' +
+        'WHERE MATRICULA_ALUNO = ' + quotedSTR (edtUsuario.Text) +
+        ' AND SENHA_ALUNO = ' + quotedSTR (edtSenha.Text);
+
+      modulo.queryAluno.close;
+      modulo.queryAluno.SQL.Clear;
+      modulo.queryAluno.SQL.Add(ConsultaUsuario2);
+      modulo.queryAluno.open;
+      //-------------------------NOTHING----------------------------//
+
+      //Check if have a registered any user
+      if (modulo.queryProfessor.Fields[0].AsInteger > 0) or
+        (modulo.queryAluno.Fields[0].AsInteger > 0) then
+          begin
+            //Check if the user found is a "PROFESSOR"
+            if (modulo.queryProfessor.Fields[0].AsInteger > 0) then
+              begin
+                try
+                  //Application.CreateForm(TFPrincipal, FPrincipal);
+                  //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
+                  FPrincipal.Show;
+                  FPrincipal.TabControl.TabIndex:= 1;
+                finally
+                  //FreeAndNil(FPrincipal);
+                  //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
+                end;
+                //FPrincipal.TabControl.TabIndex:= 1;
+                //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
+              end
+            else
+              modulo.queryProfessor.SQL.Clear;
+
+            //Check if the user found is a "ALUNO"
+            if (modulo.queryAluno.Fields[0].AsInteger > 0) then
+              begin
+                try
+                  //Application.CreateForm(TFPrincipal, FPrincipal);
+                  //UsuarioA:= modulo.queryAluno.Fields[0].Value;
+                  FPrincipal.Show;
+                  FPrincipal.TabControl.TabIndex:= 0;
+                finally
+                  //FreeAndNil(FPrincipal);
+                end;
+              end
+            else
+              modulo.queryAluno.SQL.Clear;
+              exit
+          end
+      else
         begin
-          Showmessage ('"Usuário" inválido!');
+          showmessage ('"Usuário" ou "Senha" Incorreta!');
+          edtUsuario.Text:= '';
+          edtSenha.Text:= '';
           edtUsuario.SetFocus;
           exit
         end;
-
-      // Verifica se a "SENHA" está preenchida
-      if (edtSenha.Text = '') then
-        begin
-          ShowMessage ('"Senha" inválida!');
-          edtSenha.SetFocus;
-          exit
-        end;
-
-      // Verifica se o "USUARIO" e "SENHA" estão preenchidos
-      if (edtUsuario.text <> '') and (edtSenha.Text <> '') then
-        begin
-          // Texto query para a tabela "PROFESSOR"
-          ConsultaUsuario1:= '';
-          ConsultaUsuario1:= 'SELECT * FROM PROFESSOR ' +
-            'WHERE MATRICULA_PROFESSOR = ' + quotedSTR (edtUsuario.Text) +
-            ' AND SENHA_PROFESSOR = ' + quotedSTR (edtSenha.Text);
-
-          modulo.queryProfessor.close;
-          modulo.queryProfessor.SQL.Clear;
-          modulo.queryProfessor.SQL.Add(ConsultaUsuario1);
-          modulo.queryProfessor.open;
-
-          // Texto query para a tabela "ALUNO"
-          ConsultaUsuario2:= '';
-          ConsultaUsuario2:= 'SELECT * FROM ALUNO ' +
-            'WHERE MATRICULA_ALUNO = ' + quotedSTR (edtUsuario.Text) +
-            ' AND SENHA_ALUNO = ' + quotedSTR (edtSenha.Text);
-
-          modulo.queryAluno.close;
-          modulo.queryAluno.SQL.Clear;
-          modulo.queryAluno.SQL.Add(ConsultaUsuario2);
-          modulo.queryAluno.open;
-          //-------------------------Espaçamento----------------------------//
-
-          // Verifica se existe algum dado de "USUARIOS"
-          if (modulo.queryProfessor.Fields[0].AsInteger > 0) or
-            (modulo.queryAluno.Fields[0].AsInteger > 0) then
-              begin
-                // Verifica se o usuario encontrado é um "PROFESSOR"
-                if (modulo.queryProfessor.Fields[0].AsInteger > 0) then
-                  begin
-                    try
-                      //Application.CreateForm(TFPrincipal, FPrincipal);
-                      //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
-                      FPrincipal.Show;
-                      FPrincipal.TabControl.TabIndex:= 1;
-                    finally
-                      //FreeAndNil(FPrincipal);
-                      //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
-                    end;
-                    //FPrincipal.TabControl.TabIndex:= 1;
-                    //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
-                  end
-                else
-                  modulo.queryProfessor.SQL.Clear;
-
-                // Verifica se o usuario encontrado é um "ALUNO"
-                if (modulo.queryAluno.Fields[0].AsInteger > 0) then
-                  begin
-                    try
-                      //Application.CreateForm(TFPrincipal, FPrincipal);
-                      //UsuarioA:= modulo.queryAluno.Fields[0].Value;
-                      FPrincipal.Show;
-                      FPrincipal.TabControl.TabIndex:= 0;
-                    finally
-                      //FreeAndNil(FPrincipal);
-                    end;
-                  end
-                else
-                  modulo.queryAluno.SQL.Clear;
-                  exit
-              end
-          else
-            begin
-              showmessage ('"Usuário" ou "Senha" Incorreta!');
-              edtUsuario.Text:= '';
-              edtSenha.Text:= '';
-              edtUsuario.SetFocus;
-              exit
-            end;
-        end;
+    end;
 
 end;
 
 procedure TFLogin.imgVisualizacaoSenhaClick(Sender: TObject);
 begin
-      if (edtSenha.Password = true) then
-        edtSenha.Password:= false
-      else
-      if (edtSenha.Password = false) then
-        edtsenha.Password:= true;
+  //View password
+  if (edtSenha.Password = true) then
+   edtSenha.Password:= false
+  else
+  if (edtSenha.Password = false) then
+    edtsenha.Password:= true;
 end;
 
 end.

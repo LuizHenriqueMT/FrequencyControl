@@ -43,10 +43,10 @@ type
     queryProfessorSENHA_PROFESSOR: TStringField;
     queryProfessorEMAIL_PROFESSOR: TStringField;
     queryProfessorFLAG_PROFESSOR: TStringField;
-    queryGeralCURDATE: TDateField;
     queryProfessorCPF_PROFESSOR: TStringField;
     queryAlunoNASC_ALUNO: TDateField;
     queryAlunoCPF_ALUNO: TStringField;
+    queryGeralnow: TDateTimeField;
   private
     { Private declarations }
   public
