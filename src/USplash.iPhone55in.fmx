@@ -1,5 +1,0 @@
-inherited FSplash_iPhone55in: TFSplash_iPhone55in
-  ClientHeight = 716
-  ClientWidth = 414
-  DesignerMasterStyle = 3
-end
