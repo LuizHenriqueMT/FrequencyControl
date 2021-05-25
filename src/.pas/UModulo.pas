@@ -27,25 +27,21 @@ type
     dsDP: TUniDataSource;
     dsDisciplina: TUniDataSource;
     queryDP: TUniQuery;
-    queryDPID_ASSOCPD: TIntegerField;
-    queryDPMATRICULA_PROFESSOR: TIntegerField;
-    queryDPID_MATERIA: TIntegerField;
-    queryDPFLAG_PROFESSORDISC: TStringField;
     queryDisciplina: TUniQuery;
-    queryDisciplinaID_MATERIA: TIntegerField;
-    queryDisciplinaNOME_DISCIPLINA: TStringField;
-    queryDisciplinaNUCLEO_DISCIPLINA: TStringField;
-    queryDisciplinaFLAG_DISCIPLINA: TStringField;
-    queryAulaID_AULA: TIntegerField;
-    queryAulaID_ASSOCPD: TIntegerField;
-    queryAulaID_TURMA: TIntegerField;
-    queryAulaPERIODO_AULA: TStringField;
-    queryAulaAULAORDINAL_AULA: TStringField;
-    queryAulaHORARIO_AULA: TTimeField;
-    queryAulaDIASEMANA_AULA: TStringField;
     queryDate: TUniQuery;
     queryTimeCurTime: TTimeField;
     queryDateCurDate: TDateField;
+    queryNull: TUniQuery;
+    queryNullMATRICULA_ALUNO: TIntegerField;
+    queryNullID_TURMA: TIntegerField;
+    queryNullNOME_ALUNO: TStringField;
+    queryNullNASC_ALUNO: TDateField;
+    queryNullCPF_ALUNO: TStringField;
+    queryNullLIDER_ALUNO: TStringField;
+    queryNullSEXO_ALUNO: TStringField;
+    queryNullSTATUS_ALUNO: TStringField;
+    queryNullSENHA_ALUNO: TStringField;
+    queryNullEMAIL_ALUNO: TStringField;
     queryAlunoMATRICULA_ALUNO: TIntegerField;
     queryAlunoID_TURMA: TIntegerField;
     queryAlunoNOME_ALUNO: TStringField;
@@ -64,6 +60,21 @@ type
     queryProfessorSENHA_PROFESSOR: TStringField;
     queryProfessorEMAIL_PROFESSOR: TStringField;
     queryProfessorFLAG_PROFESSOR: TStringField;
+    queryAulaID_AULA: TIntegerField;
+    queryAulaID_ASSOCPD: TIntegerField;
+    queryAulaID_TURMA: TIntegerField;
+    queryAulaPERIODO_AULA: TStringField;
+    queryAulaAULAORDINAL_AULA: TStringField;
+    queryAulaHORARIO_AULA: TTimeField;
+    queryAulaDIASEMANA_AULA: TStringField;
+    queryDPID_ASSOCPD: TIntegerField;
+    queryDPMATRICULA_PROFESSOR: TIntegerField;
+    queryDPID_MATERIA: TIntegerField;
+    queryDPFLAG_PROFESSORDISC: TStringField;
+    queryDisciplinaID_MATERIA: TIntegerField;
+    queryDisciplinaNOME_DISCIPLINA: TStringField;
+    queryDisciplinaNUCLEO_DISCIPLINA: TStringField;
+    queryDisciplinaFLAG_DISCIPLINA: TStringField;
     queryASSOCPDID_AULA: TIntegerField;
     queryASSOCPDID_ASSOCPD: TIntegerField;
     queryASSOCPDID_TURMA: TIntegerField;
@@ -86,6 +97,7 @@ type
     queryAulaPNOME_PROFESSOR: TStringField;
     queryAulaPID_MATERIA: TIntegerField;
     queryAulaPNOME_DISCIPLINA: TStringField;
+    queryNullCOLUMN_NAME: TStringField;
   private
     { Private declarations }
   public

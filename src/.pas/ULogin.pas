@@ -3,9 +3,22 @@ unit ULogin;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Objects, FMX.Controls.Presentation, FMX.Edit, FMX.Layouts;
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.StdCtrls,
+  FMX.Objects,
+  FMX.Controls.Presentation,
+  FMX.Edit,
+  FMX.Layouts;
 
 type
   TFLogin = class(TForm)
@@ -42,12 +55,10 @@ type
     { Private declarations }
   public
     { Public declarations }
-    //Usuario: integer;
   end;
 
 var
   FLogin: TFLogin;
-  usuarioP, usuarioA: integer;
 
 implementation
 
@@ -62,7 +73,6 @@ procedure TFLogin.btnEntrarClick(Sender: TObject);
 var
   ConsultaUsuario1, ConsultaUsuario2: string;
 begin
-  Application.CreateForm(TFPrincipal, FPrincipal);
   with modulo do
     begin
       //Check if the "USUARIO" has not been entered
@@ -89,7 +99,6 @@ begin
           ConsultaUsuario1:= 'SELECT * FROM PROFESSOR ' +
             'WHERE MATRICULA_PROFESSOR = ' + quotedSTR (edtUsuario.Text) +
             ' AND SENHA_PROFESSOR = ' + quotedSTR (edtSenha.Text);
-
           queryProfessor.close;
           queryProfessor.SQL.Clear;
           queryProfessor.SQL.Add(ConsultaUsuario1);
@@ -100,7 +109,6 @@ begin
           ConsultaUsuario2:= 'SELECT * FROM ALUNO ' +
             'WHERE MATRICULA_ALUNO = ' + quotedSTR (edtUsuario.Text) +
             ' AND SENHA_ALUNO = ' + quotedSTR (edtSenha.Text);
-
           queryAluno.close;
           queryAluno.SQL.Clear;
           queryAluno.SQL.Add(ConsultaUsuario2);
@@ -114,17 +122,12 @@ begin
                 if (queryProfessor.Fields[0].AsInteger > 0) then
                   begin
                     try
-                      //Application.CreateForm(TFPrincipal, FPrincipal);
-                      //UsuarioP:= queryProfessor.Fields[0].Value;
-
+                      Application.CreateForm(TFPrincipal, FPrincipal);
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 1;
                     finally
-                      //FreeAndNil(FLogin);
-                      //UsuarioP:= queryProfessor.Fields[0].Value;
+                      FreeAndNil(FLogin);
                     end;
-                    //FPrincipal.TabControl.TabIndex:= 1;
-                    //UsuarioP:= queryProfessor.Fields[0].Value;
                   end
                 else
                   queryProfessor.SQL.Clear;
@@ -133,13 +136,12 @@ begin
                 if (queryAluno.Fields[0].AsInteger > 0) then
                   begin
                     try
-                      //Application.CreateForm(TFPrincipal, FPrincipal);
-                      //UsuarioA:= queryAluno.Fields[0].Value;
-
+                      Application.CreateForm(TFPrincipal, FPrincipal);
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 0;
+
                     finally
-                      //FreeAndNil(FLogin);
+                      FreeAndNil(FLogin);
                     end;
                   end
                 else

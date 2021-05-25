@@ -192,10 +192,6 @@ inherited FPrincipal_NmXhdpiPh: TFPrincipal_NmXhdpiPh
               MultiResBitmap.Height = 280
               MultiResBitmap.Width = 280
             end
-            inherited mm1: TMemo
-              Viewport.Width = 121.000000000000000000
-              Viewport.Height = 201.000000000000000000
-            end
           end
         end
       end
@@ -454,7 +450,7 @@ inherited FPrincipal_NmXhdpiPh: TFPrincipal_NmXhdpiPh
       end
     end
   end
-  inherited mvwProfessor: TMultiView
+  inherited mvwProfessor: TMultiView [3]
     inherited imgMenuPmtv: TImage
       MultiResBitmap.Height = 96
       MultiResBitmap.Width = 96

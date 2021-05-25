@@ -44,9 +44,11 @@ object Modulo: TModulo
     end
     object queryAlunoID_TURMA: TIntegerField
       FieldName = 'ID_TURMA'
+      Required = True
     end
     object queryAlunoNOME_ALUNO: TStringField
       FieldName = 'NOME_ALUNO'
+      Required = True
       Size = 45
     end
     object queryAlunoNASC_ALUNO: TDateField
@@ -55,25 +57,30 @@ object Modulo: TModulo
     end
     object queryAlunoCPF_ALUNO: TStringField
       FieldName = 'CPF_ALUNO'
+      Required = True
       FixedChar = True
       Size = 11
     end
     object queryAlunoLIDER_ALUNO: TStringField
       FieldName = 'LIDER_ALUNO'
+      Required = True
       Size = 5
     end
     object queryAlunoSEXO_ALUNO: TStringField
       FieldName = 'SEXO_ALUNO'
+      Required = True
       FixedChar = True
       Size = 1
     end
     object queryAlunoSTATUS_ALUNO: TStringField
       FieldName = 'STATUS_ALUNO'
+      Required = True
       FixedChar = True
       Size = 3
     end
     object queryAlunoSENHA_ALUNO: TStringField
       FieldName = 'SENHA_ALUNO'
+      Required = True
       Size = 8
     end
     object queryAlunoEMAIL_ALUNO: TStringField
@@ -177,6 +184,7 @@ object Modulo: TModulo
       'PERIODO_AULA = :pPeriodo AND'
       'ID_TURMA = :pTurma AND'
       'HORARIO_AULA = :pHorario')
+    Active = True
     Left = 40
     Top = 312
     ParamData = <
@@ -475,6 +483,70 @@ object Modulo: TModulo
       FieldName = 'CurDate()'
       ReadOnly = True
       Required = True
+    end
+  end
+  object queryNull: TUniQuery
+    Connection = Conexao
+    SQL.Strings = (
+      'SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS '
+      'WHERE TABLE_SCHEMA = '#39'FrequencyControl'#39' '
+      'AND TABLE_NAME = '#39'ALUNO'#39';')
+    CachedUpdates = True
+    Left = 408
+    Top = 312
+    object queryNullMATRICULA_ALUNO: TIntegerField
+      FieldName = 'MATRICULA_ALUNO'
+      Required = True
+    end
+    object queryNullID_TURMA: TIntegerField
+      FieldName = 'ID_TURMA'
+      Required = True
+    end
+    object queryNullNOME_ALUNO: TStringField
+      FieldName = 'NOME_ALUNO'
+      Required = True
+      Size = 45
+    end
+    object queryNullNASC_ALUNO: TDateField
+      FieldName = 'NASC_ALUNO'
+      Required = True
+    end
+    object queryNullCPF_ALUNO: TStringField
+      FieldName = 'CPF_ALUNO'
+      Required = True
+      FixedChar = True
+      Size = 11
+    end
+    object queryNullLIDER_ALUNO: TStringField
+      FieldName = 'LIDER_ALUNO'
+      Required = True
+      Size = 5
+    end
+    object queryNullSEXO_ALUNO: TStringField
+      FieldName = 'SEXO_ALUNO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+    object queryNullSTATUS_ALUNO: TStringField
+      FieldName = 'STATUS_ALUNO'
+      Required = True
+      FixedChar = True
+      Size = 3
+    end
+    object queryNullSENHA_ALUNO: TStringField
+      FieldName = 'SENHA_ALUNO'
+      Required = True
+      Size = 8
+    end
+    object queryNullEMAIL_ALUNO: TStringField
+      FieldName = 'EMAIL_ALUNO'
+      Size = 100
+    end
+    object queryNullCOLUMN_NAME: TStringField
+      FieldName = 'COLUMN_NAME'
+      Required = True
+      Size = 64
     end
   end
 end

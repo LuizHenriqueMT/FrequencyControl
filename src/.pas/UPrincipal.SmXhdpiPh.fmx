@@ -392,10 +392,6 @@ inherited FPrincipal_SmXhdpiPh: TFPrincipal_SmXhdpiPh
               Size.Width = 230.000000000000000000
               Size.Height = 133.000000000000000000
             end
-            inherited mm1: TMemo
-              Viewport.Width = 121.000000000000000000
-              Viewport.Height = 201.000000000000000000
-            end
           end
         end
       end
@@ -638,7 +634,7 @@ inherited FPrincipal_SmXhdpiPh: TFPrincipal_SmXhdpiPh
       end
     end
   end
-  inherited mvwProfessor: TMultiView
+  inherited mvwProfessor: TMultiView [3]
     inherited imgMenuPmtv: TImage
       MultiResBitmap.Height = 96
       MultiResBitmap.Width = 96
