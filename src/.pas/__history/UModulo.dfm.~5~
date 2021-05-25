@@ -458,6 +458,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'SET time_zone = '#39'-2:59'#39';'
       'Select CurDate();')
+    Active = True
     Left = 336
     Top = 312
     object queryDateCurDate: TDateField

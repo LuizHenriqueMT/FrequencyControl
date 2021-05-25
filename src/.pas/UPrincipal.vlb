@@ -217,18 +217,18 @@ Coordinates=191,173,54,51
 [btnOpcoesCronograma]
 Coordinates=553,309,67,51
 
-[confirmacaoTurmaIndevida]
-Coordinates=1042,551,64,33
-
 [msgConfirmacaoTurmaIndevida]
 Coordinates=553,232,46,51
 
 [layAcaoConfirmacaoTurma]
 Coordinates=107,461,53,33
 
-[layTituloTurmaIndevida]
-Coordinates=0,329,53,33
-
 [bckGrndEscuro]
 Coordinates=282,535,79,33
+
+[confirmacaoChamadaTurma]
+Coordinates=1042,551,64,33
+
+[layTituloChamadaTurma]
+Coordinates=0,329,53,33
 

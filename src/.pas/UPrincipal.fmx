@@ -612,6 +612,18 @@ object FPrincipal: TFPrincipal
               Text = 'SpeedButton1'
               OnClick = SpeedButton1Click
             end
+            object mm1: TMemo
+              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+              DataDetectorTypes = []
+              Position.X = -8.000000000000000000
+              Position.Y = -88.000000000000000000
+              Size.Width = 121.000000000000000000
+              Size.Height = 201.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Viewport.Width = 113.000000000000000000
+              Viewport.Height = 193.000000000000000000
+            end
           end
         end
       end
@@ -1182,7 +1194,7 @@ object FPrincipal: TFPrincipal
         Visible = False
         OnClick = bckGrndEscuroClick
       end
-      object confirmacaoTurmaIndevida: TRectangle
+      object confirmacaoChamadaTurma: TRectangle
         Align = VertCenter
         Fill.Color = xFFF0F0F0
         Margins.Left = 9.000000000000000000
@@ -1203,13 +1215,13 @@ object FPrincipal: TFPrincipal
           Opacity = 0.400000005960464500
           ShadowColor = claBlack
         end
-        object layTituloTurmaIndevida: TLayout
+        object layTituloChamadaTurma: TLayout
           Align = Top
           Size.Width = 432.000000000000000000
           Size.Height = 41.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          object lbTurmaIndevida: TLabel
+          object lbChamadaTurma: TLabel
             Align = Center
             StyledSettings = []
             Size.Width = 432.000000000000000000
@@ -1350,61 +1362,6 @@ object FPrincipal: TFPrincipal
     Left = 394
     Top = 254
   end
-  object mvwAluno: TMultiView
-    BorderOptions.Color = x00F5E72D
-    BorderOptions.Visible = False
-    MasterButton = btnMenuAluno
-    Mode = Drawer
-    ShadowOptions.Opacity = 0.500000000000000000
-    SplitViewOptions.Placement = Top
-    ControlType = Platform
-    DragMode = dmAutomatic
-    Size.Width = 50.000000000000000000
-    Size.Height = 695.000000000000000000
-    Size.PlatformDefault = False
-    StyleLookup = 'multiviewstyle'
-    Visible = False
-    TabOrder = 1
-    object Rectangle1: TRectangle
-      Align = Client
-      Fill.Color = xFFFEFE73
-      Size.Width = 50.000000000000000000
-      Size.Height = 695.000000000000000000
-      Size.PlatformDefault = False
-      Stroke.Kind = Resource
-    end
-    object Image1: TImage
-      MultiResBitmap.Height = 96
-      MultiResBitmap.Width = 96
-      MultiResBitmap = <
-        item
-          Width = 96
-          Height = 96
-          PNG = {
-            89504E470D0A1A0A0000000D4948445200000060000000600806000000E29877
-            38000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-            00C949444154785EEDDACD0EC1401886D1B22371F37E126B17888558E21BECB4
-            DAA299919E933CC14AD291B1792B00000000000018BD79B4898ED1559D3A44EB
-            68167D6D1BD57D89DA4BCFEEADC9F3B5C9343A453F39C9113A478BE872FF5423
-            3D60326A3B807472BBC75B3E909E5DE3AFBFAB74FDACA2F4C75277CFE9B57DB4
-            8C5CDD000000000000005032D3C4FE99261692696266A689A5334D1C966962A6
-            4C1301000000000000E01F9826F6CF34B1904C1333334D2C9D69E2B04C133365
-            9A08000000000000A1AA6E4AE7CC657330012A0000000049454E44AE426082}
-          FileName = 
-            'G:\Google Driver\Luiz\Escola\TCC\Projeto\Sistema\SysCedup\img\ic' +
-            'ons\icons8-menu-96.png'
-        end>
-      Align = Scale
-      Margins.Top = 2.000000000000000000
-      Margins.Right = 5.000000000000000000
-      Margins.Bottom = 2.000000000000000000
-      Position.Y = 2.000000000000000000
-      Size.Width = 45.000000000000000000
-      Size.Height = 39.000000000000000000
-      Size.PlatformDefault = False
-      WrapMode = Place
-    end
-  end
   object mvwProfessor: TMultiView
     BorderOptions.Color = x00F5E72D
     MasterButton = btnMenuProfessor
@@ -1455,6 +1412,61 @@ object FPrincipal: TFPrincipal
       Position.X = -8.000000000000000000
       Position.Y = 2.000000000000000000
       Size.Width = 59.000000000000000000
+      Size.Height = 39.000000000000000000
+      Size.PlatformDefault = False
+      WrapMode = Place
+    end
+  end
+  object mvwAluno: TMultiView
+    BorderOptions.Color = x00F5E72D
+    BorderOptions.Visible = False
+    MasterButton = btnMenuAluno
+    Mode = Drawer
+    ShadowOptions.Opacity = 0.500000000000000000
+    SplitViewOptions.Placement = Top
+    ControlType = Platform
+    DragMode = dmAutomatic
+    Size.Width = 50.000000000000000000
+    Size.Height = 695.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'multiviewstyle'
+    Visible = False
+    TabOrder = 1
+    object Rectangle1: TRectangle
+      Align = Client
+      Fill.Color = xFFFEFE73
+      Size.Width = 50.000000000000000000
+      Size.Height = 695.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = Resource
+    end
+    object Image1: TImage
+      MultiResBitmap.Height = 96
+      MultiResBitmap.Width = 96
+      MultiResBitmap = <
+        item
+          Width = 96
+          Height = 96
+          PNG = {
+            89504E470D0A1A0A0000000D4948445200000060000000600806000000E29877
+            38000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+            00C949444154785EEDDACD0EC1401886D1B22371F37E126B17888558E21BECB4
+            DAA299919E933CC14AD291B1792B00000000000018BD79B4898ED1559D3A44EB
+            68167D6D1BD57D89DA4BCFEEADC9F3B5C9343A453F39C9113A478BE872FF5423
+            3D60326A3B807472BBC75B3E909E5DE3AFBFAB74FDACA2F4C75277CFE9B57DB4
+            8C5CDD000000000000005032D3C4FE99261692696266A689A5334D1C966962A6
+            4C1301000000000000E01F9826F6CF34B1904C1333334D2C9D69E2B04C133365
+            9A08000000000000A1AA6E4AE7CC657330012A0000000049454E44AE426082}
+          FileName = 
+            'G:\Google Driver\Luiz\Escola\TCC\Projeto\Sistema\SysCedup\img\ic' +
+            'ons\icons8-menu-96.png'
+        end>
+      Align = Scale
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 45.000000000000000000
       Size.Height = 39.000000000000000000
       Size.PlatformDefault = False
       WrapMode = Place

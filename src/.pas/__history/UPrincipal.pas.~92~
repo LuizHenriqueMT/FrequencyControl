@@ -79,7 +79,7 @@ type
     bckGrndEscuro: TRectangle;
     confirmacaoChamadaTurma: TRectangle;
     ShadowEffect1: TShadowEffect;
-    layTituloChamadaTurma: TLayout;
+    layTituloTurmaIndevida: TLayout;
     layFrequencia: TLayout;
     msgConfirmacaoTurmaIndevida: TLabel;
     layAcaoConfirmacaoTurma: TLayout;
@@ -114,18 +114,20 @@ type
     imgProfessor: TCircle;
     layOpcoesCronograma: TLayout;
     lbHorarioCronogramaP: TLabel;
-    lbChamadaTurma: TLabel;
+    lbTurmaIndevida: TLabel;
     lbConfirmar: TLabel;
     lbCancelar: TLabel;
     TimerDateTime: TTimer;
     TimerDadosQR: TTimer;
     Edit1: TEdit;
     SpeedButton1: TSpeedButton;
-    mm1: TMemo;
     procedure FormActivate(Sender: TObject);
     procedure imgMenuClick(Sender: TObject);
     procedure bckGrndEscuroClick(Sender: TObject);
     procedure lbNumeroTurma1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure lbConfirmarClick(Sender: TObject);
     procedure lbCancelarClick(Sender: TObject);
     procedure TimerDateTimeTimer(Sender: TObject);
@@ -136,19 +138,14 @@ type
     procedure horaAula;
   private
     { Private declarations }
-    FQRCodeBitMap: TBitMap;
-    FStrDados: TStringList;
-    QRCode: TDelphiZXIngQRCode;
-
-    DataQR: TDateTime;
-    HorarioAtual: TTime;
+    procedure QrCodeMobile(imgQRCode: TImage; texto: string);
+    procedure QRCodeWin(imgQRCode: TImage; texto: string);
 
   public
     { Public declarations }
-    procedure QrCodeMobile(imgQRCode: TImage; texto: string);
-    procedure QRCodeWin(imgQRCode: TImage; texto: string);
-    procedure Update;
-
+    DataQR: TDateTime;
+    ListagemDadosQR: TMemo;
+    HorarioAtual: TTime;
   end;
 
 var
@@ -162,6 +159,26 @@ implementation
 {$R *.SmXhdpiPh.fmx ANDROID}
 
 uses ULogin, UModulo;
+
+procedure TFPrincipal.Button1Click(Sender: TObject);
+begin
+  bckGrndEscuro.Visible:= false;
+  confirmacaoTurmaIndevida.Visible:= false;
+end;
+
+procedure TFPrincipal.Button2Click(Sender: TObject);
+begin
+  bckGrndEscuro.Visible:= false;
+  confirmacaoTurmaIndevida.Visible:= false;
+  TabControl.TabIndex:= 2;
+end;
+
+procedure TFPrincipal.Button3Click(Sender: TObject);
+begin
+  bckGrndEscuro.Visible:= false;
+  confirmacaoTurmaIndevida.Visible:= false;
+  TabControl.TabIndex:= 2;
+end;
 
 procedure TFPrincipal.FormActivate(Sender: TObject);
 var
@@ -259,7 +276,7 @@ begin
           begin
             if queryAulaP.Fields[0].Value <> Null then
               begin
-                lbDisciplinaProfessor.Text:= queryAulaP.Fields[9].Value;
+                lbDisciplinaP.Text:= queryAulaP.Fields[9].Value;
 
                 {
                 Check funcionality
@@ -271,7 +288,7 @@ begin
         else
         if (queryAulaP.Fields[0].Value = null) then
           begin
-            lbDisciplinaProfessor.Text:= '-';
+            lbDisciplinaP.Text:= '-';
             exit
           end;
       end
@@ -308,20 +325,23 @@ begin
 
         //Information to generate QR Code
         FStrDados:= TSTringList.Create;
-        FStrDados.Text:= 'ola';
+        FStrDados.Add(queryAluno.Fields[0].value); //"MATRICULA" of "ALUNO"
+        FStrDados.Add(queryAluno.Fields[2].value); //"NOME" of "ALUNO"
+        FStrDados.Add(queryAluno.Fields[1].value); //"TURMA" of "ALUNO"
+        FStrDados.Add('--');
+
+        FStrDados.Add(lbProfessorAluno.Text); //"NOME" of "PROFESSOR"
+        FStrDados.Add(lbDisciplinaAluno.Text); //"DISCIPLINA" of "PROFESSOR"
+        FStrDados.Add(lbDataQR.Text); //Current DateTime
 
         //Creation the QR Code image component
         FQRCodeBitMap:=  TBitMap.Create;
 
         //Get procedure to generate QR Code
-        {$IFDEF MSWINDOWS}
-          QRCodeWin(imgQRCode, FStrDados.Text);
-        {$ELSE}
-          QRCodeMobile(imgQRCode, FStrDados.Text);
-        {$ENDIF}
+        Update;
 
         //Show the information saved in the memo
-        mm1.Lines.Add(FStrDados.Text);
+        mm1.Lines.Add(fstrdados.Text);
       end;
     end;
 end;
@@ -335,16 +355,12 @@ begin
   for I:= 0 to 9 do
     begin
       DadosAlunoQR[I]:= modulo.queryAluno.Fields[I].AsString;
-      {
-        FStrDados.Lines.add(DadosAlunoQR[I]);
-      }
+      //ListagemDadosQR.Lines.add(DadosAlunoQR[I]);
     end;
 
-  //Saves the current "DateTime" in the same array to generate the QR Code
-  {
-    DadosAlunoQR[10]:= DateTimeToStr(DataQR);
-    FStrDados.Lines.add(DadosAlunoQR[10]);
-  }
+      //Saves the current "DateTime" in the same array to generate the QR Code
+      //DadosAlunoQR[10]:= DateTimeToStr(DataQR);
+      //ListagemDadosQR.Lines.add(DadosAlunoQR[10]);
 end;
 
 procedure TFPrincipal.horaAula;
@@ -487,7 +503,7 @@ begin
               IncMinute(StrToTime(HorarioLetivo), 40));
               HorarioA:= HorarioA + 1;
 
-              if (queryTime.Fields[0].AsString <= (HorarioLetivo)) and
+              if (queryTime.Fields[0].AsString <= (pa1)) and
                 (queryTime.Fields[0].AsString >= queryTime.Fields[0].AsString) then
                 begin
                   HorarioLetivo:= FormatDateTime('hh:MM:ss',
@@ -593,9 +609,8 @@ end;
 
 procedure TFPrincipal.lbNumeroTurma1Click(Sender: TObject);
 begin
-  //Open the confirmation pop-up
-  bckGrndEscuro.Visible:= true;
-  confirmacaoChamadaTurma.Visible:= true;
+ bckGrndEscuro.Visible:= true;
+ confirmacaoChamadaTurma.Visible:= true;
 end;
 
 procedure TFPrincipal.QrCodeMobile(imgQRCode: TImage; texto: string);
@@ -742,7 +757,7 @@ begin
   getFieldIndex(Sender);
 
   {$IFDEF MSWINDOWS}
-    QRCodeWin(imgQRCode, FStrDados.Text);
+    QRCodeWin(imgQRCode, ListagemDadosQR.Text);
   {$ELSE}
     QRCodeMobile(imgQRCode, ListagemDadosQR.Text);
   {$ENDIF}
@@ -756,20 +771,12 @@ end;
 
 procedure TFPrincipal.TimerDateTimeTimer(Sender: TObject);
 begin
-  with modulo do
-    begin
-      //Update the current DateTime every 1 second
-      queryNow.execute;
+  //Update the current DateTime every 1 second
+  modulo.queryGeral.execute;
 
-      //DateTime Formatting
-      DataQR:= queryNow.Fields[0].AsDateTime;
-      lbDiaAtual.text:= (DateTimeToStr(DataQR));
-    end;
-end;
-
-procedure TFPrincipal.update;
-begin
-
+  //DateTime Formatting
+  DataQR:= modulo.queryGeral.Fields[0].AsDateTime;
+  lbDiaAtual.text:= (DateTimeToStr(DataQR));
 end;
 
 procedure TFPrincipal.lbConfirmarClick(Sender: TObject);
@@ -782,7 +789,6 @@ end;
 
 procedure TFPrincipal.bckGrndEscuroClick(Sender: TObject);
 begin
-  //Close confirmation pop-up
   bckGrndEscuro.Visible:= false;
   confirmacaoChamadaTurma.Visible:= false;
 end;

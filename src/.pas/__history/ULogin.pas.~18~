@@ -120,7 +120,7 @@ begin
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 1;
                     finally
-                      FreeAndNil(FLogin);
+                      FreeAndNil(FPrincipal);
                       UsuarioP:= queryProfessor.Fields[0].Value;
                     end;
                     FPrincipal.TabControl.TabIndex:= 1;
@@ -135,11 +135,10 @@ begin
                     try
                       Application.CreateForm(TFPrincipal, FPrincipal);
                       UsuarioA:= queryAluno.Fields[0].Value;
-
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 0;
                     finally
-                      FreeAndNil(FLogin);
+                      FreeAndNil(FPrincipal);
                     end;
                   end
                 else

@@ -3,13 +3,36 @@ unit UPrincipal;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.MultiView,
-  FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
-  FMX.TabControl, FMX.Effects,
+  System.SysUtils,
+  System.StrUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  System.DateUtils,
+  System.Math,
+  System.Rtti,
+
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.MultiView,
+  FMX.Objects,
+  FMX.Controls.Presentation,
+  FMX.StdCtrls,
+  FMX.Layouts,
+  FMX.TabControl,
+  FMX.Effects,
   FMXDelphiZXIngQRCode,
-  System.Math, System.Rtti, FMX.Grid.Style, FMX.ScrollBox, FMX.Grid, FMX.ListBox,
-  FMX.Memo, FMX.Edit;
+
+  FMX.Grid.Style,
+  FMX.ScrollBox,
+  FMX.Grid,
+  FMX.ListBox,
+  FMX.Memo,
+  FMX.Edit;
 
 type
   TFPrincipal = class(TForm)
@@ -54,7 +77,7 @@ type
     imgMenuPmtv: TImage;
     bckGrndAluno: TRectangle;
     bckGrndEscuro: TRectangle;
-    confirmacaoTurmaIndevida: TRectangle;
+    confirmacaoChamadaTurma: TRectangle;
     ShadowEffect1: TShadowEffect;
     layTituloTurmaIndevida: TLayout;
     layFrequencia: TLayout;
@@ -162,32 +185,39 @@ var
   UsuarioAluno, UsuarioProfessor: string;
   DataQR: TDateTime;
 begin
+  with modulo do
+    begin
+      //Add "ALUNO" name to profile
+      {
+        UsuarioAluno:= IntToStr(UsuarioA);
+      }
+      UsuarioAluno:= (modulo.queryAluno.Fields[2].asString);
+      lbNomeALuno.Text:= (UsuarioAluno);
 
-  //Add "ALUNO" name to profile
-  {UsuarioAluno:= IntToStr(UsuarioA);}
-  UsuarioAluno:= (modulo.queryAluno.Fields[2].asString);
-  lbNomeALuno.Text:= (UsuarioAluno);
+      //ADD "PROFESSOR" name to profile
+      {
+        UsuarioProfessor:= IntToStr(UsuarioP);
+      }
+      UsuarioProfessor:= (modulo.queryProfessor.Fields[1].asString);
+      lbNomeProfessor.Text:= (UsuarioProfessor);
 
-  //ADD "PROFESSOR" name to profile
-  {UsuarioProfessor:= IntToStr(UsuarioP);}
-  UsuarioProfessor:= (modulo.queryProfessor.Fields[1].asString);
-  lbNomeProfessor.Text:= (UsuarioProfessor);
+      //Add the current DateTime
+      {
+        queryGeral.Close;
+        queryGeral.Sql.Clear;
+        queryGeral.SQL.Add('SET time_zone = '+'-2:59'+';');
+        queryGeral.SQL.Add('Select NOW()');
+      }
+      queryNow.Open;
+      queryNow.execute;
 
-  //Add the current DateTime
-  {modulo.queryGeral.Close;
-  modulo.queryGeral.Sql.Clear;
-  modulo.queryGeral.SQL.Add('SET time_zone = '+'-2:59'+';');
-  modulo.queryGeral.SQL.Add('Select NOW()');}
-  modulo.queryGeral.Open;
-  modulo.queryGeral.execute;
+      //DateTime Formatting
+      DataQR:= queryNow.Fields[0].AsDateTime;
+      lbDiaAtual.text:= (DateTimeToStr(DataQR));
 
-  //DateTime Formatting
-  DataQR:= modulo.queryGeral.Fields[0].AsDateTime;
-  lbDiaAtual.text:= (DateTimeToStr(DataQR));
-
-  //Generation of initial information for the QR Code
-  //getFieldIndex(Sender);
-
+      //Generation of initial information for the QR Code
+      //getFieldIndex(Sender);
+    end;
 end;
 
 procedure TFPrincipal.FormCreate(Sender: TObject);
@@ -218,96 +248,99 @@ begin
       queryAula.First;
 
       //Activate the current DateTime query
-      queryNow.active;
+      queryNow.open;
       queryNow.execute;
+
+      //Activate the current Time query
+      queryTime.Open;
+      queryTime.Execute;
 
       //DateTime Formatting
       DataQR:= queryNow.Fields[0].AsDateTime;
       lbDiaAtual.text:= (DateTimeToStr(DataQR));
 
-      //INICIALIZA QUERY DE HORA ATUAL DO SISTEMA
-      queryTime.Open;
-
-      //IDENTIFICA O PERIODO DA AULA E TURMA
-      horaAula;
-
-
+      //Procedure to identify the class period
+      HoraAula;
       if tabcontrol.ActiveTab.Index = 1 then
       begin
-        {showmessage(queryAulaP.Params.ParamByName('pProfessor').asstring);
-        showmessage(queryAulaP.Params.ParamByName('pSemana').asstring);
-        showmessage(queryAulaP.Params.ParamByName('pHorario').asstring);
-        showmessage(queryAulaP.Params.ParamByName('pPeriodo').asstring); VERIFICA FUNCIONALIDADE}
-        //-----------ADICIONA O PROFESSOR/DISCIPLINA DA TURMA NO PERFIL DO PROFESSOR
+        {
+        Check funcionality
+          showmessage(queryAulaP.Params.ParamByName('pProfessor').asstring);
+          showmessage(queryAulaP.Params.ParamByName('pSemana').asstring);
+          showmessage(queryAulaP.Params.ParamByName('pHorario').asstring);
+          showmessage(queryAulaP.Params.ParamByName('pPeriodo').asstring);
+        }
 
-        //-----------ADICIONA NOME DO DISCIPLINA
+        //Add "DISCIPLINA" to the "PROFESSOR" profile
         if (queryProfessor.Fields[0].Value = queryAulaP.Fields[6].value) then
-        begin
-          if queryAulaP.Fields[0].Value <> Null then
           begin
-            lbDisciplinaP.Text:= queryAulaP.Fields[9].Value;
+            if queryAulaP.Fields[0].Value <> Null then
+              begin
+                lbDisciplinaP.Text:= queryAulaP.Fields[9].Value;
 
-            {showmessage(queryAulaP.Fields[6].asstring); VERIFICA FUNCIONALIDADE
-            showmessage(queryAulaP.Fields[9].asstring);}
-          end;
-        end
-        else
-
-        if (queryAulaP.Fields[0].Value = null) then
-        begin
-          lbDisciplinaP.Text:= '-';
-          exit
-        end;
-      end
-      else
-
-      if tabcontrol.ActiveTab.Index = 0 then
-      begin
-        //-----------ADICIONA O PROFESSOR/DISCIPLINA DA TURMA NO PERFIL DO ALUNO
-        if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
-        begin
-          if queryASSOCPD.Fields[0].Value <> Null then
-          begin
-            //-----------ADICIONA NOME DO PROFESSOR/DISCIPLINA
-            if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].value) then
-            begin
-              lbProfessorAluno.Text:= queryASSOCPD.Fields[7].AsString;
-              lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].AsString;
-            end;
+                {
+                Check funcionality
+                  showmessage(queryAulaP.Fields[6].asstring);
+                  showmessage(queryAulaP.Fields[9].asstring);
+                }
+              end;
           end
-          else
-          if (queryASSOCPD.Fields[0].Value = null) then
+        else
+        if (queryAulaP.Fields[0].Value = null) then
           begin
-            lbProfessorAluno.text:= '-';
-            lbDisciplinaAluno.Text:= '-';
+            lbDisciplinaP.Text:= '-';
             exit
           end;
-        end;
+      end
+      else
+      if tabcontrol.ActiveTab.Index = 0 then
+        begin
+          //Adds the "PROFESSOR" and "DISCIPLINA" to the "ALUNO" profile
+          if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
+            begin
+              if queryASSOCPD.Fields[0].Value <> Null then
+                begin
+                  //Adds "PROFESSOR" name and "DISCPLINA" to the "ALUNO" profile
+                  if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].value) then
+                    begin
+                      lbProfessorAluno.Text:= queryASSOCPD.Fields[7].AsString;
+                      lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].AsString;
+                    end;
+                end
+              else
+              //Clear the "PROFESSOR" fields and "DISCIPLINA" the "ALUNOS" profile
+              if (queryASSOCPD.Fields[0].Value = null) then
+                begin
+                  lbProfessorAluno.text:= '-';
+                  lbDisciplinaAluno.Text:= '-';
+                  exit
+                end;
+            end;
 
-        //-----------PEGANDO TODAS AS AULAS DA TURMA
+        //Get all classes in the class
         queryAula.Close;
         queryAula.Sql.Clear;
         queryAula.SQL.Add('SELECT * FROM AULA WHERE ID_TURMA = ' + queryAluno.fields[1].asstring);
         queryAula.Open;
 
-        //-----------COLETAR DADOS PARA ARMAZENAR NO QRCODE
+        //Information to generate QR Code
         FStrDados:= TSTringList.Create;
-        FStrDados.Add(queryAluno.Fields[0].value); //Matricula do Aluno
-        FStrDados.Add(queryAluno.Fields[2].value); //Nome do Aluno
-        FStrDados.Add(queryAluno.Fields[1].value); //Turma do Aluno
+        FStrDados.Add(queryAluno.Fields[0].value); //"MATRICULA" of "ALUNO"
+        FStrDados.Add(queryAluno.Fields[2].value); //"NOME" of "ALUNO"
+        FStrDados.Add(queryAluno.Fields[1].value); //"TURMA" of "ALUNO"
         FStrDados.Add('--');
 
-        FStrDados.Add(lbProfessorAluno.Text); //Nome do Professor
-        FStrDados.Add(lbDisciplinaAluno.Text); //Materia do professor
-        FStrDados.Add(lbDataQR.Text); //Data Atual
-        FStrDados.Add(TimeToStr(queryGeralH.Fields[0].AsDateTime)); //Hora Atual
+        FStrDados.Add(lbProfessorAluno.Text); //"NOME" of "PROFESSOR"
+        FStrDados.Add(lbDisciplinaAluno.Text); //"DISCIPLINA" of "PROFESSOR"
+        FStrDados.Add(lbDataQR.Text); //Current DateTime
 
-        //-----------CRIAÇÃO DO COMPONENTE DE IMAGEM QRCODE
+        //Creation the QR Code image component
         FQRCodeBitMap:=  TBitMap.Create;
 
-        //-----------GERAÇÃO QRCODE //PROCEDURE//
+        //Get procedure to generate QR Code
         Update;
 
+        //Show the information saved in the memo
         mm1.Lines.Add(fstrdados.Text);
       end;
     end;
@@ -332,249 +365,253 @@ end;
 
 procedure TFPrincipal.horaAula;
 var
-  turno, turnoAula, pa1: String;
-  contP, horarioA: Integer;
+  Turno, TurnoAula, HorarioLetivo: String;
+  ContP, HorarioA: Integer;
 begin
   with modulo do
     begin
-      horarioA:= 1;
+      HorarioA:= 1;
 
-      //IDENTIFICA SEMANA ATUAL
-      case DayOfWeek(queryGeralD.Fields[0].value) of //StrToDate('06/12/2020')
+      //Identifies the current week
+      case DayOfWeek(queryDate.Fields[0].value) of //StrToDate('06/12/2020')
         1:begin
-            //ADICIONA A 'DATA' DA SEMANA NA PESQUISA DA AULA --'DOMINGO'--
+            //Adds the date of the week as "SUNDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 1;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 1;
           end;
 
         2:begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'SEGUNDA'--
+            //Adds the date of the week as "MONDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 2;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 2;
           end;
 
         3:Begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'TERÇA'--
+            //Adds the date of the week as "TUESDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 3;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 3;
           End;
 
         4:Begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'QUARTA'--
+            //Adds the date of the week as "WEDNESDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 4;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 4;
           End;
 
         5:Begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'QUINTA'--
+            //Adds the date of the week as "THURSDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 5;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 5;
           End;
 
         6:Begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'SEXTA'--
+            //Adds the date of the week as "FRIDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 6;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 6;
           End;
 
         7:Begin
-            //ADICIONA A DATA DA SEMANA NA PESQUISA DA AULA --'SÁBADO'--
+            //Adds the date of the week as "SATURDAY"
             queryASSOCPD.Params.ParamByName('pSemana').AsInteger:= 7;
             queryAulaP.Params.ParamByName('pSemana').AsInteger:= 7;
           End;
       end;
 
-      //TRATAMENTO DE HORAS '08:30' E PERIODO DA AULA 'M'
-      if (queryGeralH.Fields[0].Value >= '07:40:00') and
-      (queryGeralH.Fields[0].Value <= '12:30:00') then
-      begin
-        turno:= 'M';
+      //Treatment of hours (07:40) and period (M) of class
+      if (queryTime.Fields[0].Value >= '07:40:00') and
+        (queryTime.Fields[0].Value <= '12:30:00') then
+        begin
+          Turno:= 'M';
+          HorarioLetivo:= ('07:40:00');
 
-        pa1:= ('07:40:00');
-        {mm1.Lines.Add(pa1);
-        mm1.Lines.Add(IntToStr(horarioA));}
+          {Tests
+            mm1.Lines.Add(HorarioLetivo);
+            mm1.Lines.Add(IntToStr(HorarioA));
+          Tests}
 
-        //REPETIÇÃO IDENTIFICADOR DO PERIODO EM BASE DA HORA ATUAL
-        for contP:= 0 to 6 do
-          begin
-            pa1:= FormatDateTime('hh:MM:ss',
-            IncMinute(StrToTime(pa1), 40));
-
-            horarioA:= horarioA + 1;
-
-            if (queryGeralH.Fields[0].AsString <= (pa1)) and
-            (queryGeralH.Fields[0].AsString >= queryGeralH.Fields[0].AsString) then
+          //Identifies the time and period of the current class
+          for contP:= 0 to 6 do
             begin
-              pa1:= FormatDateTime('hh:MM:ss',
-              IncMinute(StrToTime(pa1), -40));
+              HorarioLetivo:= FormatDateTime('hh:MM:ss',
+              IncMinute(StrToTime(HorarioLetivo), 40));
+              HorarioA:= HorarioA + 1;
 
-              horarioA:= horarioA - 1;
-              {mm1.Lines.Add(pa1);
-              mm1.Lines.Add(IntToStr(horarioA));}
+              if (queryTime.Fields[0].AsString <= (HorarioLetivo)) and
+                (queryTime.Fields[0].AsString >= queryTime.Fields[0].AsString) then
+                begin
+                  HorarioLetivo:= FormatDateTime('hh:MM:ss',
+                  IncMinute(StrToTime(HorarioLetivo), -40));
+                  HorarioA:= HorarioA - 1;
+                  {
+                    mm1.Lines.Add(HorarioLetivo);
+                    mm1.Lines.Add(IntToStr(HorarioA));
+                  }
+                end;
             end;
-          end;
       end
       else
+      //Treatment of hours (13:15) and period (V) of class
+      if (queryTime.Fields[0].Value >= '13:15:00') and
+        (queryTime.Fields[0].Value <= '17:30:00') then
+        begin
+          turno:= 'V';
+          HorarioLetivo:= ('13:15:00');
+          {
+            mm1.Lines.Add(pa1);
+            mm1.Lines.Add(IntToStr(horarioA));
+          }
 
-      if (queryGeralH.Fields[0].Value >= '13:15:00') and
-      (queryGeralH.Fields[0].Value <= '17:30:00') then
-      begin
-        turno:= 'V';
-
-        pa1:= ('13:15:00');
-        {mm1.Lines.Add(pa1);
-        mm1.Lines.Add(IntToStr(horarioA));}
-
-        //REPETIÇÃO IDENTIFICADOR DO PERIODO EM BASE DA HORA ATUAL
-        for contP:= 0 to 6 do
-          begin
-            pa1:= FormatDateTime('hh:MM:ss',
-            IncMinute(StrToTime(pa1), 40));
-
-            horarioA:= horarioA + 1;
-
-            if (queryGeralH.Fields[0].AsString <= (pa1)) and
-            (queryGeralH.Fields[0].AsString >= queryGeralH.Fields[0].AsString) then
+          //Identifies the time and period of the current class
+          for contP:= 0 to 6 do
             begin
-              pa1:= FormatDateTime('hh:MM:ss',
-              IncMinute(StrToTime(pa1), -40));
+              HorarioLetivo:= FormatDateTime('hh:MM:ss',
+              IncMinute(StrToTime(HorarioLetivo), 40));
 
-              horarioA:= horarioA - 1;
-              {mm1.Lines.Add(pa1);
-              mm1.Lines.Add(IntToStr(horarioA));}
+              HorarioA:= HorarioA + 1;
+
+              if (queryTime.Fields[0].AsString <= (HorarioLetivo)) and
+                (queryTime.Fields[0].AsString >= queryTime.Fields[0].AsString) then
+                begin
+                  HorarioLetivo:= FormatDateTime('hh:MM:ss',
+                  IncMinute(StrToTime(HorarioLetivo), -40));
+                  HorarioA:= HorarioA - 1;
+
+                  {
+                    mm1.Lines.Add(HorarioLetivo);
+                    mm1.Lines.Add(IntToStr(HorarioA));
+                  }
+                end;
             end;
-          end;
-      end
+          end
       else
+      //Treatment of hours (18:30) and period (N) of class
+      if (queryTime.Fields[0].value >= '18:30:00') and
+        (queryTime.Fields[0].value <= '22:00:00') then  //22:00:00
+        begin
+          Turno:= 'N';
+          HorarioLetivo:= ('18:30:00');
 
-      if (queryGeralH.Fields[0].value >= '18:30:00') and
-      (queryGeralH.Fields[0].value <= '22:00:00') then  //22:00:00
-      begin
-        turno:= 'N';
+          {
+            mm1.Lines.Add(pa1);
+            mm1.Lines.Add(IntToStr(horarioA));
+          }
 
-        pa1:= ('18:30:00');
-        {mm1.Lines.Add(pa1);
-        mm1.Lines.Add(IntToStr(horarioA));}
+          //Identifies the time and period of the current class
+          for contP:= 0 to 7 do
+            begin
+              HorarioLetivo:= FormatDateTime('hh:MM:ss',
+              IncMinute(StrToTime(HorarioLetivo), 40));
+              HorarioA:= HorarioA + 1;
 
-        //REPETIÇÃO IDENTIFICADOR DO PERIODO EM BASE DA HORA ATUAL
-        for contP:= 0 to 7 do
-          begin
-            pa1:= FormatDateTime('hh:MM:ss',
-            IncMinute(StrToTime(pa1), 40));
+              if (queryTime.Fields[0].AsString <= (pa1)) and
+                (queryTime.Fields[0].AsString >= queryTime.Fields[0].AsString) then
+                begin
+                  HorarioLetivo:= FormatDateTime('hh:MM:ss',
+                  IncMinute(StrToTime(HorarioLetivo), -40));
+                  HorarioA:= HorarioA - 1;
 
-            horarioA:= horarioA + 1;
+                  {
+                    mm1.Lines.Add(HorarioLetivo);
+                    mm1.Lines.Add(IntToStr(HorarioA));
+                  }
+                end;
+            end;
+        end;
 
-            if (queryGeralH.Fields[0].AsString <= (pa1)) and
-            (queryGeralH.Fields[0].AsString >= queryGeralH.Fields[0].AsString) then
+      //Period treatment (M/V/N)
+      case AnsiIndexStr(Turno, ['M', 'V', 'N']) of
+        0:Begin
+
+            if tabControl.ActiveTab.Index = 0 then
               begin
-                pa1:= FormatDateTime('hh:MM:ss',
-                IncMinute(StrToTime(pa1), -40));
+                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= Turno;
+                queryASSOCPD.Params.ParamByName('pTurma').AsString:= queryAluno.Fields[1].AsString;
+                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= HorarioA;
+                queryASSOCPD.ExecSQL;
 
-                horarioA:= horarioA - 1;
-
-                mm1.Lines.Add(pa1);
-                mm1.Lines.Add(IntToStr(horarioA));
+                if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
+                  Begin
+                    lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
+                    lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
+                    showmessage ('Horario ' + (IntToStr(HorarioA)));
+                  end;
+              end
+            else
+            if tabControl.ActiveTab.Index = 1 then
+              begin
+                queryAulaP.Params.ParamByName('pPeriodo').AsString:= Turno;
+                queryAulaP.Params.ParamByName('pHorario').AsInteger:= HorarioA;
+                queryAulaP.ExecSQL;
               end;
           end;
-      end;
 
-      //TRATAMEMTO DE PERIODO 'M,V,N'
-      case AnsiIndexStr(turno, ['M', 'V', 'N']) of
-        0:  Begin
-
-              if tabControl.ActiveTab.Index = 0 then
+        1:Begin
+            if tabControl.ActiveTab.Index = 0 then
               begin
-                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= turno;
+                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= Turno;
                 queryASSOCPD.Params.ParamByName('pTurma').AsString:= queryAluno.Fields[1].AsString;
-                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= horarioA;
+                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= HorarioA;
                 queryASSOCPD.ExecSQL;
 
                 if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
-                Begin
-                  lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
-                  lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
-
-                  showmessage ('Horario ' + (IntToStr(HorarioA)));
-                end;
-              End
-              else
-              if tabControl.ActiveTab.Index = 1 then
-              begin
-                queryAulaP.Params.ParamByName('pPeriodo').AsString:= turno;
-                queryAulaP.Params.ParamByName('pHorario').AsInteger:= horarioA;
-
-                queryAulaP.ExecSQL;
-              end;
-            End;
-
-        1:  Begin
-              if tabControl.ActiveTab.Index = 0 then
-              begin
-                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= turno;
-                queryASSOCPD.Params.ParamByName('pTurma').AsString:= queryAluno.Fields[1].AsString;
-                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= horarioA;
-                queryASSOCPD.ExecSQL;
-
-                if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
-                Begin
-                  lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
-                  lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
-                end;
-              End
-              else
-
-              if tabControl.ActiveTab.Index = 1 then
-              begin
-                queryAulaP.Params.ParamByName('pPeriodo').AsString:= turno;
-                queryAulaP.Params.ParamByName('pHorario').AsInteger:= horarioA;
-                queryAulaP.ExecSQL;
-              end;
-            End;
-
-        2:  Begin
-              if tabControl.ActiveTab.Index = 0 then
-              begin
-                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= turno;
-                queryASSOCPD.Params.ParamByName('pTurma').AsString:= queryAluno.Fields[1].AsString;
-                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= horarioA;
-                queryASSOCPD.ExecSQL;
-
-                if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
-                Begin
-                  lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
-                  lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
-                end;
+                  Begin
+                    lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
+                    lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
+                  end;
               end
               else
-
-              if tabControl.ActiveTab.Index = 1 then
+            if tabControl.ActiveTab.Index = 1 then
               begin
-                queryAulaP.Params.ParamByName('pPeriodo').AsString:= turno;
-                queryAulaP.Params.ParamByName('pHorario').AsInteger:= horarioA;
+                queryAulaP.Params.ParamByName('pPeriodo').AsString:= Turno;
+                queryAulaP.Params.ParamByName('pHorario').AsInteger:= HorarioA;
                 queryAulaP.ExecSQL;
               end;
-            End;
+          end;
 
+        2:Begin
+            if tabControl.ActiveTab.Index = 0 then
+              begin
+                queryASSOCPD.Params.ParamByName('pPeriodo').AsString:= Turno;
+                queryASSOCPD.Params.ParamByName('pTurma').AsString:= queryAluno.Fields[1].AsString;
+                queryASSOCPD.Params.ParamByName('pHorario').AsInteger:= HorarioA;
+                queryASSOCPD.ExecSQL;
 
+                if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
+                  Begin
+                    lbProfessorAluno.Text:= queryASSOCPD.Fields[7].Value;
+                    lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].Value;
+                  end;
+              end
+              else
+            if tabControl.ActiveTab.Index = 1 then
+              begin
+                queryAulaP.Params.ParamByName('pPeriodo').AsString:= Turno;
+                queryAulaP.Params.ParamByName('pHorario').AsInteger:= HorarioA;
+                queryAulaP.ExecSQL;
+              end;
+          end;
       end;
     end;
 end;
 
 procedure TFPrincipal.imgMenuClick(Sender: TObject);
 begin
+  //Ativates "PROFESSOR" menu
   mvwProfessor.Visible:= true;
 end;
 
 procedure TFPrincipal.lbCancelarClick(Sender: TObject);
 begin
+  //Cancel student call
   bckGrndEscuro.Visible:= false;
-  confirmacaoTurmaIndevida.Visible:= false;
+  confirmacaoChamadaTurma.Visible:= false;
 end;
 
 procedure TFPrincipal.lbNumeroTurma1Click(Sender: TObject);
 begin
- bckGrndEscuro.Visible:= true;
- confirmacaoTurmaIndevida.Visible:= true;
+  //Open the confirmation pop-up
+  bckGrndEscuro.Visible:= true;
+  confirmacaoChamadaTurma.Visible:= true;
 end;
 
 procedure TFPrincipal.QrCodeMobile(imgQRCode: TImage; texto: string);
@@ -745,15 +782,17 @@ end;
 
 procedure TFPrincipal.lbConfirmarClick(Sender: TObject);
 begin
+  //Confirm students call
   bckGrndEscuro.Visible:= false;
-  confirmacaoTurmaIndevida.Visible:= false;
+  confirmacaoChamadaTurma.Visible:= false;
   TabControl.TabIndex:= 2;
 end;
 
 procedure TFPrincipal.bckGrndEscuroClick(Sender: TObject);
 begin
+  //Close confirmation pop-up
   bckGrndEscuro.Visible:= false;
-  confirmacaoTurmaIndevida.Visible:= false;
+  confirmacaoChamadaTurma.Visible:= false;
 end;
 
 end.

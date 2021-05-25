@@ -192,6 +192,10 @@ inherited FPrincipal_NmXhdpiPh: TFPrincipal_NmXhdpiPh
               MultiResBitmap.Height = 280
               MultiResBitmap.Width = 280
             end
+            inherited mm1: TMemo
+              Viewport.Width = 121.000000000000000000
+              Viewport.Height = 201.000000000000000000
+            end
           end
         end
       end
@@ -413,12 +417,12 @@ inherited FPrincipal_NmXhdpiPh: TFPrincipal_NmXhdpiPh
           end
         end
       end
-      inherited confirmacaoTurmaIndevida: TRectangle
+      inherited confirmacaoChamadaTurma: TRectangle
         Position.Y = 254.000000000000000000
         Size.Width = 382.000000000000000000
-        inherited layTituloTurmaIndevida: TLayout
+        inherited layTituloChamadaTurma: TLayout
           Size.Width = 382.000000000000000000
-          inherited lbTurmaIndevida: TLabel
+          inherited lbChamadaTurma: TLabel
             TextSettings.Font.StyleExt = {00070000000000000004000000}
           end
         end
@@ -450,7 +454,7 @@ inherited FPrincipal_NmXhdpiPh: TFPrincipal_NmXhdpiPh
       end
     end
   end
-  inherited mvwProfessor: TMultiView [3]
+  inherited mvwProfessor: TMultiView
     inherited imgMenuPmtv: TImage
       MultiResBitmap.Height = 96
       MultiResBitmap.Width = 96
