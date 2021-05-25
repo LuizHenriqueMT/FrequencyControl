@@ -96,6 +96,8 @@ type
     lbCancelar: TLabel;
     TimerDateTime: TTimer;
     TimerDadosQR: TTimer;
+    Edit1: TEdit;
+    SpeedButton1: TSpeedButton;
     procedure FormActivate(Sender: TObject);
     procedure imgMenuClick(Sender: TObject);
     procedure bckGrndEscuroClick(Sender: TObject);
@@ -108,10 +110,13 @@ type
     procedure TimerDateTimeTimer(Sender: TObject);
     procedure TimerDadosQRTimer(Sender: TObject);
     procedure getFieldIndex (Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     procedure QrCodeMobile(imgQRCode: TImage; texto: string);
     procedure QRCodeWin(imgQRCode: TImage; texto: string);
+    HorarioAtual: TTime;
   public
     { Public declarations }
     DataQR: TDateTime;
@@ -153,7 +158,7 @@ end;
 procedure TFPrincipal.FormActivate(Sender: TObject);
 var
   UsuarioAluno, UsuarioProfessor: string;
-  DataQR: TDATETIME;
+  DataQR: TDateTime;
 begin
 
   //Add "ALUNO" name to profile
@@ -167,46 +172,160 @@ begin
   lbNomeProfessor.Text:= (UsuarioProfessor);
 
   //Add the current DateTime
-  modulo.queryGeral.Close;
+  {modulo.queryGeral.Close;
   modulo.queryGeral.Sql.Clear;
-  modulo.queryGeral.SQL.Add('Select NOW()');
+  modulo.queryGeral.SQL.Add('SET time_zone = '+'-2:59'+';');
+  modulo.queryGeral.SQL.Add('Select NOW()');}
   modulo.queryGeral.Open;
+  modulo.queryGeral.execute;
 
   //DateTime Formatting
   DataQR:= modulo.queryGeral.Fields[0].AsDateTime;
   lbDiaAtual.text:= (DateTimeToStr(DataQR));
 
   //Generation of initial information for the QR Code
-  getFieldIndex(Sender);
+  //getFieldIndex(Sender);
+
+end;
+
+procedure TFPrincipal.FormCreate(Sender: TObject);
+var
+  UsuarioAluno, UsuarioProfessor, ConsultaHorario: string;
+  TodasAulas, Cont, VAulaID:  Integer;
+  DataQR: TDATE;
+begin
+  with modulo do
+    begin
+      //Activate "ALUNO/PROFESSOR" tab
+      if queryAluno.Fields[0].Value > 0 then
+        begin
+          tabControl.ActiveTab:= tbAluno;
+        end
+      else
+      if queryProfessor.Fields[0].Value > 0 then
+        begin
+          tabControl.ActiveTab:= tbProfessor;
+
+          queryAulaP.Params.ParamByName('pProfessor').AsInteger:=
+          queryProfessor.Fields[0].Value;
+        end;
+
+      //Add the current time into the variable
+      HorarioAtual:= queryTime.Fields[0].AsDateTime;
+
+      queryAula.First;
+
+      //Activate the current DateTime query
+      queryNow.active;
+      queryNow.execute;
+
+      //DateTime Formatting
+      DataQR:= queryNow.Fields[0].AsDateTime;
+      lbDiaAtual.text:= (DateTimeToStr(DataQR));
+
+      //INICIALIZA QUERY DE HORA ATUAL DO SISTEMA
+      queryTime.Open;
+
+      //IDENTIFICA O PERIODO DA AULA E TURMA
+      horaAula;
 
 
-  {$IFDEF MSWINDOWS}
-    QRCodeWin(imgQRCode, ListagemDadosQR.Text);
-  {$ELSE}
-    QRCodeMobile(imgQRCode, );
-  {$ENDIF}
+      if tabcontrol.ActiveTab.Index = 1 then
+      begin
+        {showmessage(queryAulaP.Params.ParamByName('pProfessor').asstring);
+        showmessage(queryAulaP.Params.ParamByName('pSemana').asstring);
+        showmessage(queryAulaP.Params.ParamByName('pHorario').asstring);
+        showmessage(queryAulaP.Params.ParamByName('pPeriodo').asstring); VERIFICA FUNCIONALIDADE}
+        //-----------ADICIONA O PROFESSOR/DISCIPLINA DA TURMA NO PERFIL DO PROFESSOR
 
+        //-----------ADICIONA NOME DO DISCIPLINA
+        if (queryProfessor.Fields[0].Value = queryAulaP.Fields[6].value) then
+        begin
+          if queryAulaP.Fields[0].Value <> Null then
+          begin
+            lbDisciplinaP.Text:= queryAulaP.Fields[9].Value;
+
+            {showmessage(queryAulaP.Fields[6].asstring); VERIFICA FUNCIONALIDADE
+            showmessage(queryAulaP.Fields[9].asstring);}
+          end;
+        end
+        else
+
+        if (queryAulaP.Fields[0].Value = null) then
+        begin
+          lbDisciplinaP.Text:= '-';
+          exit
+        end;
+      end
+      else
+
+      if tabcontrol.ActiveTab.Index = 0 then
+      begin
+        //-----------ADICIONA O PROFESSOR/DISCIPLINA DA TURMA NO PERFIL DO ALUNO
+        if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].Value) then
+        begin
+          if queryASSOCPD.Fields[0].Value <> Null then
+          begin
+            //-----------ADICIONA NOME DO PROFESSOR/DISCIPLINA
+            if (queryAluno.Fields[1].Value = queryASSOCPD.Fields[2].value) then
+            begin
+              lbProfessorAluno.Text:= queryASSOCPD.Fields[7].AsString;
+              lbDisciplinaAluno.Text:= queryASSOCPD.Fields[9].AsString;
+            end;
+          end
+          else
+          if (queryASSOCPD.Fields[0].Value = null) then
+          begin
+            lbProfessorAluno.text:= '-';
+            lbDisciplinaAluno.Text:= '-';
+            exit
+          end;
+        end;
+
+        //-----------PEGANDO TODAS AS AULAS DA TURMA
+        queryAula.Close;
+        queryAula.Sql.Clear;
+        queryAula.SQL.Add('SELECT * FROM AULA WHERE ID_TURMA = ' + queryAluno.fields[1].asstring);
+        queryAula.Open;
+
+        //-----------COLETAR DADOS PARA ARMAZENAR NO QRCODE
+        FStrDados:= TSTringList.Create;
+        FStrDados.Add(queryAluno.Fields[0].value); //Matricula do Aluno
+        FStrDados.Add(queryAluno.Fields[2].value); //Nome do Aluno
+        FStrDados.Add(queryAluno.Fields[1].value); //Turma do Aluno
+        FStrDados.Add('--');
+
+        FStrDados.Add(lbProfessorAluno.Text); //Nome do Professor
+        FStrDados.Add(lbDisciplinaAluno.Text); //Materia do professor
+        FStrDados.Add(lbDataQR.Text); //Data Atual
+        FStrDados.Add(TimeToStr(queryGeralH.Fields[0].AsDateTime)); //Hora Atual
+
+        //-----------CRIAÇÃO DO COMPONENTE DE IMAGEM QRCODE
+        FQRCodeBitMap:=  TBitMap.Create;
+
+        //-----------GERAÇÃO QRCODE //PROCEDURE//
+        Update;
+
+        mm1.Lines.Add(fstrdados.Text);
+      end;
+    end;
 end;
 
 procedure TFPrincipal.getFieldIndex(Sender: TObject);
 var
-  DadosAlunoQR: array [0..10] of string;
+  DadosAlunoQR: array [0..9] of string;
   I: integer;
 begin
-  with modulo do
+  //Saves "ALUNO" information in an array to generate the QR Code
+  for I:= 0 to 9 do
     begin
-      //Saves "ALUNO" information in an array to generate the QR Code
-      for I:= 0 to 9 do
-        begin
-          DadosAlunoQR[I]:= queryAluno.Fields[I].AsString;
-          ListagemDadosQR.Lines.add(DadosAlunoQR[I]);
-        end;
+      DadosAlunoQR[I]:= modulo.queryAluno.Fields[I].AsString;
+      //ListagemDadosQR.Lines.add(DadosAlunoQR[I]);
+    end;
 
       //Saves the current "DateTime" in the same array to generate the QR Code
-      DadosAlunoQR[10]:= DateTimeToStr(DataQR);
-      ListagemDadosQR.Lines.add(DadosAlunoQR[10]);
-     showmessage (listagemDadosQr.Text);
-    end;
+      //DadosAlunoQR[10]:= DateTimeToStr(DataQR);
+      //ListagemDadosQR.Lines.add(DadosAlunoQR[10]);
 end;
 
 procedure TFPrincipal.imgMenuClick(Sender: TObject);
@@ -232,8 +351,8 @@ const
 var
   QRCode: TDelphiZXingQRCode;
   Row, Column: Integer;
-  pixelColor : TAlphaColor;
-  vBitMapData : TBitmapData;
+  pixelColor: TAlphaColor;
+  vBitMapData: TBitmapData;
   pixelCount, y, x: Integer;
   columnPixel, rowPixel: Integer;
 
@@ -365,10 +484,21 @@ begin
 
 end;
 
+procedure TFPrincipal.SpeedButton1Click(Sender: TObject);
+begin
+  getFieldIndex(Sender);
+
+  {$IFDEF MSWINDOWS}
+    QRCodeWin(imgQRCode, ListagemDadosQR.Text);
+  {$ELSE}
+    QRCodeMobile(imgQRCode, ListagemDadosQR.Text);
+  {$ENDIF}
+end;
+
 procedure TFPrincipal.TimerDadosQRTimer(Sender: TObject);
 begin
   //Generates new information for the new QR Code every 3 minutes
-  getFieldIndex(Sender);
+  //getFieldIndex(Sender);
 end;
 
 procedure TFPrincipal.TimerDateTimeTimer(Sender: TObject);

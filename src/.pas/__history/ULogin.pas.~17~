@@ -134,7 +134,7 @@ begin
                   begin
                     try
                       Application.CreateForm(TFPrincipal, FPrincipal);
-                      UsuarioA:= queryAluno.Fields[0].Value;
+                      //UsuarioA:= modulo.queryAluno.Fields[0].Value;
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 0;
                     finally
@@ -142,7 +142,7 @@ begin
                     end;
                   end
                 else
-                  queryAluno.SQL.Clear;
+                  modulo.queryAluno.SQL.Clear;
                   exit
               end
           else

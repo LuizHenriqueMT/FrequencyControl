@@ -3,35 +3,13 @@ unit UPrincipal;
 interface
 
 uses
-  System.SysUtils,
-  System.Types,
-  System.UITypes,
-  System.Classes,
-  System.Variants,
-  System.DateUtils,
-  System.Math,
-  System.Rtti,
-
-  FMX.Types,
-  FMX.Controls,
-  FMX.Forms,
-  FMX.Graphics,
-  FMX.Dialogs,
-  FMX.MultiView,
-  FMX.Objects,
-  FMX.Controls.Presentation,
-  FMX.StdCtrls,
-  FMX.Layouts,
-  FMX.TabControl,
-  FMX.Effects,
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.MultiView,
+  FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
+  FMX.TabControl, FMX.Effects,
   FMXDelphiZXIngQRCode,
-
-  FMX.Grid.Style,
-  FMX.ScrollBox,
-  FMX.Grid,
-  FMX.ListBox,
-  FMX.Memo,
-  FMX.Edit;
+  System.Math, System.Rtti, FMX.Grid.Style, FMX.ScrollBox, FMX.Grid, FMX.ListBox,
+  FMX.Memo, FMX.Edit;
 
 type
   TFPrincipal = class(TForm)
@@ -184,39 +162,32 @@ var
   UsuarioAluno, UsuarioProfessor: string;
   DataQR: TDateTime;
 begin
-  with modulo do
-    begin
-      //Add "ALUNO" name to profile
-      {
-        UsuarioAluno:= IntToStr(UsuarioA);
-      }
-      UsuarioAluno:= (modulo.queryAluno.Fields[2].asString);
-      lbNomeALuno.Text:= (UsuarioAluno);
 
-      //ADD "PROFESSOR" name to profile
-      {
-        UsuarioProfessor:= IntToStr(UsuarioP);
-      }
-      UsuarioProfessor:= (modulo.queryProfessor.Fields[1].asString);
-      lbNomeProfessor.Text:= (UsuarioProfessor);
+  //Add "ALUNO" name to profile
+  {UsuarioAluno:= IntToStr(UsuarioA);}
+  UsuarioAluno:= (modulo.queryAluno.Fields[2].asString);
+  lbNomeALuno.Text:= (UsuarioAluno);
 
-      //Add the current DateTime
-      {
-        queryGeral.Close;
-        queryGeral.Sql.Clear;
-        queryGeral.SQL.Add('SET time_zone = '+'-2:59'+';');
-        queryGeral.SQL.Add('Select NOW()');
-      }
-      queryNow.Open;
-      queryNow.execute;
+  //ADD "PROFESSOR" name to profile
+  {UsuarioProfessor:= IntToStr(UsuarioP);}
+  UsuarioProfessor:= (modulo.queryProfessor.Fields[1].asString);
+  lbNomeProfessor.Text:= (UsuarioProfessor);
 
-      //DateTime Formatting
-      DataQR:= queryNow.Fields[0].AsDateTime;
-      lbDiaAtual.text:= (DateTimeToStr(DataQR));
+  //Add the current DateTime
+  {modulo.queryGeral.Close;
+  modulo.queryGeral.Sql.Clear;
+  modulo.queryGeral.SQL.Add('SET time_zone = '+'-2:59'+';');
+  modulo.queryGeral.SQL.Add('Select NOW()');}
+  modulo.queryGeral.Open;
+  modulo.queryGeral.execute;
 
-      //Generation of initial information for the QR Code
-      //getFieldIndex(Sender);
-    end;
+  //DateTime Formatting
+  DataQR:= modulo.queryGeral.Fields[0].AsDateTime;
+  lbDiaAtual.text:= (DateTimeToStr(DataQR));
+
+  //Generation of initial information for the QR Code
+  //getFieldIndex(Sender);
+
 end;
 
 procedure TFPrincipal.FormCreate(Sender: TObject);
@@ -361,8 +332,8 @@ end;
 
 procedure TFPrincipal.horaAula;
 var
-  Turno, TurnoAula, Horario: String;
-  ContP, HorarioA: Integer;
+  turno, turnoAula, pa1: String;
+  contP, horarioA: Integer;
 begin
   with modulo do
     begin
@@ -413,37 +384,35 @@ begin
           End;
       end;
 
-      //Treatment of hours (08:30) and period (M) of class
-      if (queryTime.Fields[0].Value >= '07:40:00') and
-        (queryTime.Fields[0].Value <= '12:30:00') then
-        begin
-          Turno:= 'M';
-          Horario:= ('07:40:00');
+      //TRATAMENTO DE HORAS '08:30' E PERIODO DA AULA 'M'
+      if (queryGeralH.Fields[0].Value >= '07:40:00') and
+      (queryGeralH.Fields[0].Value <= '12:30:00') then
+      begin
+        turno:= 'M';
 
-          {Tests
-            mm1.Lines.Add(pa1);
-            mm1.Lines.Add(IntToStr(horarioA));
-          Tests}
+        pa1:= ('07:40:00');
+        {mm1.Lines.Add(pa1);
+        mm1.Lines.Add(IntToStr(horarioA));}
 
-          //REPETIÇÃO IDENTIFICADOR DO PERIODO EM BASE DA HORA ATUAL
-          for contP:= 0 to 6 do
+        //REPETIÇÃO IDENTIFICADOR DO PERIODO EM BASE DA HORA ATUAL
+        for contP:= 0 to 6 do
+          begin
+            pa1:= FormatDateTime('hh:MM:ss',
+            IncMinute(StrToTime(pa1), 40));
+
+            horarioA:= horarioA + 1;
+
+            if (queryGeralH.Fields[0].AsString <= (pa1)) and
+            (queryGeralH.Fields[0].AsString >= queryGeralH.Fields[0].AsString) then
             begin
-              Horario:= FormatDateTime('hh:MM:ss',
-              IncMinute(StrToTime(horario), 40));
+              pa1:= FormatDateTime('hh:MM:ss',
+              IncMinute(StrToTime(pa1), -40));
 
-              horarioA:= horarioA + 1;
-
-              if (queryGeralH.Fields[0].AsString <= (pa1)) and
-              (queryGeralH.Fields[0].AsString >= queryGeralH.Fields[0].AsString) then
-              begin
-                pa1:= FormatDateTime('hh:MM:ss',
-                IncMinute(StrToTime(pa1), -40));
-
-                horarioA:= horarioA - 1;
-                {mm1.Lines.Add(pa1);
-                mm1.Lines.Add(IntToStr(horarioA));}
-              end;
+              horarioA:= horarioA - 1;
+              {mm1.Lines.Add(pa1);
+              mm1.Lines.Add(IntToStr(horarioA));}
             end;
+          end;
       end
       else
 

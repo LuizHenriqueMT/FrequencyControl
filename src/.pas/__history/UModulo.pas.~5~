@@ -16,7 +16,7 @@ type
     dsAluno: TUniDataSource;
     UniDataSource2: TUniDataSource;
     queryProfessor: TUniQuery;
-    queryNow: TUniQuery;
+    queryGeral: TUniQuery;
     queryAlunoMATRICULA_ALUNO: TIntegerField;
     queryAlunoID_TURMA: TIntegerField;
     queryAlunoNOME_ALUNO: TStringField;
@@ -35,7 +35,7 @@ type
     queryProfessorCPF_PROFESSOR: TStringField;
     queryAlunoNASC_ALUNO: TDateField;
     queryAlunoCPF_ALUNO: TStringField;
-    queryNownow: TDateTimeField;
+    queryGeralnow: TDateTimeField;
     SQLAluno: TUniSQL;
     queryASSOCPD: TUniQuery;
     queryASSOCPDID_AULA: TIntegerField;
@@ -59,8 +59,17 @@ type
     StringField4: TStringField;
     IntegerField5: TIntegerField;
     StringField5: TStringField;
-    queryTime: TUniQuery;
+    queryGeralD: TUniQuery;
+    queryGeralDCURDATE: TDateField;
+    queryGeralH: TUniQuery;
+    queryGeralHCURTIME: TTimeField;
     queryAula: TUniQuery;
+    queryAulaID_AULA: TIntegerField;
+    queryAulaID_ASSOCPD: TIntegerField;
+    queryAulaID_TURMA: TIntegerField;
+    queryAulaPERIODO_AULA: TStringField;
+    queryAulaHORARIO_AULA: TStringField;
+    queryAulaDIASEMANA_AULA: TStringField;
     dsAula: TUniDataSource;
     dsDP: TUniDataSource;
     dsDisciplina: TUniDataSource;
@@ -74,16 +83,6 @@ type
     queryDisciplinaNOME_DISCIPLINA: TStringField;
     queryDisciplinaNUCLEO_DISCIPLINA: TStringField;
     queryDisciplinaFLAG_DISCIPLINA: TStringField;
-    queryAulaID_AULA: TIntegerField;
-    queryAulaID_ASSOCPD: TIntegerField;
-    queryAulaID_TURMA: TIntegerField;
-    queryAulaPERIODO_AULA: TStringField;
-    queryAulaAULAORDINAL_AULA: TStringField;
-    queryAulaHORARIO_AULA: TTimeField;
-    queryAulaDIASEMANA_AULA: TStringField;
-    queryDate: TUniQuery;
-    queryTimeCurTime: TTimeField;
-    queryDateCurDate: TDateField;
   private
     { Private declarations }
   public

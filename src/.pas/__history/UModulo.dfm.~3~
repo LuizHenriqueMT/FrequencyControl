@@ -17,7 +17,7 @@ object Modulo: TModulo
       '9BFF'
   end
   object ProviderAluno: TMySQLUniProvider
-    Left = 264
+    Left = 336
     Top = 240
   end
   object traAluno: TUniTransaction
@@ -134,14 +134,14 @@ object Modulo: TModulo
       Size = 1
     end
   end
-  object queryNow: TUniQuery
+  object queryGeral: TUniQuery
     Connection = Conexao
     SQL.Strings = (
       'SET time_zone = '#39'-2:59'#39';'
       'Select now();')
-    Left = 192
-    Top = 312
-    object queryNownow: TDateTimeField
+    Left = 264
+    Top = 240
+    object queryGeralnow: TDateTimeField
       FieldName = 'now()'
       ReadOnly = True
       Required = True
@@ -340,15 +340,26 @@ object Modulo: TModulo
       Size = 35
     end
   end
-  object queryTime: TUniQuery
+  object queryGeralD: TUniQuery
     Connection = Conexao
     SQL.Strings = (
-      'SET time_zone = '#39'-2:59'#39';'
-      'Select CurTime();')
+      'Select CURDATE()')
+    Left = 193
+    Top = 312
+    object queryGeralDCURDATE: TDateField
+      FieldName = 'CURDATE()'
+      ReadOnly = True
+      Required = True
+    end
+  end
+  object queryGeralH: TUniQuery
+    Connection = Conexao
+    SQL.Strings = (
+      'select CURTIME()')
     Left = 264
     Top = 312
-    object queryTimeCurTime: TTimeField
-      FieldName = 'CurTime()'
+    object queryGeralHCURTIME: TTimeField
+      FieldName = 'CURTIME()'
       ReadOnly = True
       Required = True
     end
@@ -359,7 +370,6 @@ object Modulo: TModulo
       'Select *'
       'From AULA'
       'WHERE ID_TURMA = 353')
-    Active = True
     Left = 193
     Top = 104
     object queryAulaID_AULA: TIntegerField
@@ -377,13 +387,10 @@ object Modulo: TModulo
       FixedChar = True
       Size = 1
     end
-    object queryAulaAULAORDINAL_AULA: TStringField
-      FieldName = 'AULAORDINAL_AULA'
+    object queryAulaHORARIO_AULA: TStringField
+      FieldName = 'HORARIO_AULA'
       FixedChar = True
       Size = 1
-    end
-    object queryAulaHORARIO_AULA: TTimeField
-      FieldName = 'HORARIO_AULA'
     end
     object queryAulaDIASEMANA_AULA: TStringField
       FieldName = 'DIASEMANA_AULA'
@@ -451,20 +458,6 @@ object Modulo: TModulo
       FieldName = 'FLAG_DISCIPLINA'
       FixedChar = True
       Size = 1
-    end
-  end
-  object queryDate: TUniQuery
-    Connection = Conexao
-    SQL.Strings = (
-      'SET time_zone = '#39'-2:59'#39';'
-      'Select CurDate();')
-    Active = True
-    Left = 336
-    Top = 312
-    object queryDateCurDate: TDateField
-      FieldName = 'CurDate()'
-      ReadOnly = True
-      Required = True
     end
   end
 end

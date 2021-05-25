@@ -65,7 +65,7 @@ begin
   Application.CreateForm(TFPrincipal, FPrincipal);
   with modulo do
     begin
-      //Check if the "USUARIO" has not been entered
+      //Check if the "USUARIO" has been entered
       if (edtUsuario.Text = '') then
         begin
           Showmessage ('"Usuário" inválido!');
@@ -73,7 +73,7 @@ begin
           exit
         end;
 
-      //Check if the "SENHA" has not been entered
+      //Check if the "SENHA" has been entered
       if (edtSenha.Text = '') then
         begin
           ShowMessage ('"Senha" inválida!');
@@ -105,6 +105,7 @@ begin
           queryAluno.SQL.Clear;
           queryAluno.SQL.Add(ConsultaUsuario2);
           queryAluno.open;
+          //-------------------------NOTHING----------------------------//
 
           //Check if have a registered any user
           if (queryProfessor.Fields[0].AsInteger > 0) or
@@ -114,27 +115,26 @@ begin
                 if (queryProfessor.Fields[0].AsInteger > 0) then
                   begin
                     try
-                      Application.CreateForm(TFPrincipal, FPrincipal);
-                      UsuarioP:= queryProfessor.Fields[0].Value;
-
+                      //Application.CreateForm(TFPrincipal, FPrincipal);
+                      //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 1;
                     finally
-                      FreeAndNil(FPrincipal);
-                      UsuarioP:= queryProfessor.Fields[0].Value;
+                      //FreeAndNil(FPrincipal);
+                      //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
                     end;
-                    FPrincipal.TabControl.TabIndex:= 1;
-                    UsuarioP:= queryProfessor.Fields[0].Value;
+                    //FPrincipal.TabControl.TabIndex:= 1;
+                    //UsuarioP:= modulo.queryProfessor.Fields[0].Value;
                   end
                 else
                   queryProfessor.SQL.Clear;
 
-                //Check if the user found is an "ALUNO"
+                //Check if the user found is a "ALUNO"
                 if (queryAluno.Fields[0].AsInteger > 0) then
                   begin
                     try
                       Application.CreateForm(TFPrincipal, FPrincipal);
-                      UsuarioA:= queryAluno.Fields[0].Value;
+                      //UsuarioA:= modulo.queryAluno.Fields[0].Value;
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 0;
                     finally
@@ -142,7 +142,7 @@ begin
                     end;
                   end
                 else
-                  queryAluno.SQL.Clear;
+                  modulo.queryAluno.SQL.Clear;
                   exit
               end
           else

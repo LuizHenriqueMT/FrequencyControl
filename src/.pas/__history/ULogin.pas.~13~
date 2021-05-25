@@ -104,13 +104,13 @@ begin
       modulo.queryAluno.SQL.Clear;
       modulo.queryAluno.SQL.Add(ConsultaUsuario2);
       modulo.queryAluno.open;
-      //-------------------------Espaçamento----------------------------//
+      //-------------------------NOTHING----------------------------//
 
-      // Verifica se existe algum dado de "USUARIOS"
+      //Check if have a registered any user
       if (modulo.queryProfessor.Fields[0].AsInteger > 0) or
         (modulo.queryAluno.Fields[0].AsInteger > 0) then
           begin
-            // Verifica se o usuario encontrado é um "PROFESSOR"
+            //Check if the user found is a "PROFESSOR"
             if (modulo.queryProfessor.Fields[0].AsInteger > 0) then
               begin
                 try
@@ -128,16 +128,16 @@ begin
             else
               modulo.queryProfessor.SQL.Clear;
 
-            // Verifica se o usuario encontrado é um "ALUNO"
+            //Check if the user found is a "ALUNO"
             if (modulo.queryAluno.Fields[0].AsInteger > 0) then
               begin
                 try
-                  //Application.CreateForm(TFPrincipal, FPrincipal);
+                  Application.CreateForm(TFPrincipal, FPrincipal);
                   //UsuarioA:= modulo.queryAluno.Fields[0].Value;
                   FPrincipal.Show;
                   FPrincipal.TabControl.TabIndex:= 0;
                 finally
-                  //FreeAndNil(FPrincipal);
+                  FreeAndNil(FPrincipal);
                 end;
               end
             else
@@ -158,11 +158,12 @@ end;
 
 procedure TFLogin.imgVisualizacaoSenhaClick(Sender: TObject);
 begin
-      if (edtSenha.Password = true) then
-        edtSenha.Password:= false
-      else
-      if (edtSenha.Password = false) then
-        edtsenha.Password:= true;
+  //View password
+  if (edtSenha.Password = true) then
+   edtSenha.Password:= false
+  else
+  if (edtSenha.Password = false) then
+    edtsenha.Password:= true;
 end;
 
 end.
