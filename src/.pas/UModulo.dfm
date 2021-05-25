@@ -49,6 +49,10 @@ object Modulo: TModulo
       FieldName = 'NOME_ALUNO'
       Size = 45
     end
+    object queryAlunoNASC_ALUNO: TDateField
+      FieldName = 'NASC_ALUNO'
+      Required = True
+    end
     object queryAlunoCPF_ALUNO: TStringField
       FieldName = 'CPF_ALUNO'
       FixedChar = True
@@ -56,7 +60,6 @@ object Modulo: TModulo
     end
     object queryAlunoLIDER_ALUNO: TStringField
       FieldName = 'LIDER_ALUNO'
-      FixedChar = True
       Size = 5
     end
     object queryAlunoSEXO_ALUNO: TStringField
@@ -76,10 +79,6 @@ object Modulo: TModulo
     object queryAlunoEMAIL_ALUNO: TStringField
       FieldName = 'EMAIL_ALUNO'
       Size = 100
-    end
-    object queryAlunoNASC_ALUNO: TDateField
-      FieldName = 'NASC_ALUNO'
-      Required = True
     end
   end
   object dsAluno: TUniDataSource
@@ -139,6 +138,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'SET time_zone = '#39'-2:59'#39';'
       'Select now();')
+    Active = True
     Left = 192
     Top = 312
     object queryNownow: TDateTimeField
@@ -215,10 +215,13 @@ object Modulo: TModulo
       FixedChar = True
       Size = 1
     end
-    object queryASSOCPDHORARIO_AULA: TStringField
-      FieldName = 'HORARIO_AULA'
+    object queryASSOCPDAULAORDINAL_AULA: TStringField
+      FieldName = 'AULAORDINAL_AULA'
       FixedChar = True
       Size = 1
+    end
+    object queryASSOCPDHORARIO_AULA: TTimeField
+      FieldName = 'HORARIO_AULA'
     end
     object queryASSOCPDDIASEMANA_AULA: TStringField
       FieldName = 'DIASEMANA_AULA'
@@ -271,6 +274,7 @@ object Modulo: TModulo
       'PERIODO_AULA = :pPeriodo AND'
       'HORARIO_AULA = :pHorario AND'
       'p.MATRICULA_PROFESSOR = :pProfessor')
+    Active = True
     Left = 120
     Top = 312
     ParamData = <
@@ -294,47 +298,50 @@ object Modulo: TModulo
         Name = 'pProfessor'
         Value = nil
       end>
-    object IntegerField1: TIntegerField
+    object queryAulaPID_AULA: TIntegerField
       FieldName = 'ID_AULA'
       Required = True
     end
-    object IntegerField2: TIntegerField
+    object queryAulaPID_ASSOCPD: TIntegerField
       FieldName = 'ID_ASSOCPD'
     end
-    object IntegerField3: TIntegerField
+    object queryAulaPID_TURMA: TIntegerField
       FieldName = 'ID_TURMA'
     end
-    object StringField1: TStringField
+    object queryAulaPPERIODO_AULA: TStringField
       FieldName = 'PERIODO_AULA'
       FixedChar = True
       Size = 1
     end
-    object StringField2: TStringField
-      FieldName = 'HORARIO_AULA'
+    object queryAulaPAULAORDINAL_AULA: TStringField
+      FieldName = 'AULAORDINAL_AULA'
       FixedChar = True
       Size = 1
     end
-    object StringField3: TStringField
+    object queryAulaPHORARIO_AULA: TTimeField
+      FieldName = 'HORARIO_AULA'
+    end
+    object queryAulaPDIASEMANA_AULA: TStringField
       FieldName = 'DIASEMANA_AULA'
       FixedChar = True
       Size = 3
     end
-    object IntegerField4: TIntegerField
+    object queryAulaPMATRICULA_PROFESSOR: TIntegerField
       FieldName = 'MATRICULA_PROFESSOR'
       ReadOnly = True
       Required = True
     end
-    object StringField4: TStringField
+    object queryAulaPNOME_PROFESSOR: TStringField
       FieldName = 'NOME_PROFESSOR'
       ReadOnly = True
       Size = 45
     end
-    object IntegerField5: TIntegerField
+    object queryAulaPID_MATERIA: TIntegerField
       FieldName = 'ID_MATERIA'
       ReadOnly = True
       Required = True
     end
-    object StringField5: TStringField
+    object queryAulaPNOME_DISCIPLINA: TStringField
       FieldName = 'NOME_DISCIPLINA'
       ReadOnly = True
       Size = 35
@@ -345,6 +352,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'SET time_zone = '#39'-2:59'#39';'
       'Select CurTime();')
+    Active = True
     Left = 264
     Top = 312
     object queryTimeCurTime: TTimeField
@@ -410,6 +418,7 @@ object Modulo: TModulo
     Connection = Conexao
     SQL.Strings = (
       'SELECT * FROM ASSOCIACAO_PROFESSOR_DISCIPLINA ')
+    Active = True
     Left = 264
     Top = 104
     object queryDPID_ASSOCPD: TIntegerField
@@ -432,6 +441,7 @@ object Modulo: TModulo
     Connection = Conexao
     SQL.Strings = (
       'Select * From DISCIPLINAS')
+    Active = True
     Left = 336
     Top = 104
     object queryDisciplinaID_MATERIA: TIntegerField
@@ -458,6 +468,7 @@ object Modulo: TModulo
     SQL.Strings = (
       'SET time_zone = '#39'-2:59'#39';'
       'Select CurDate();')
+    Active = True
     Left = 336
     Top = 312
     object queryDateCurDate: TDateField

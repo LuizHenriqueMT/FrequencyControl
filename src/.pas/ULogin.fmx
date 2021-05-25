@@ -8125,6 +8125,7 @@ object FLogin: TFLogin
               Align = Left
               StyleLookup = 'Edit1Style1'
               TabOrder = 0
+              Password = True
               TextSettings.Font.Family = 'Cloud'
               TextSettings.Font.Size = 20.000000000000000000
               TextSettings.Font.StyleExt = {00020000000000000004000000}

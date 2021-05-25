@@ -114,17 +114,17 @@ begin
                 if (queryProfessor.Fields[0].AsInteger > 0) then
                   begin
                     try
-                      Application.CreateForm(TFPrincipal, FPrincipal);
-                      UsuarioP:= queryProfessor.Fields[0].Value;
+                      //Application.CreateForm(TFPrincipal, FPrincipal);
+                      //UsuarioP:= queryProfessor.Fields[0].Value;
 
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 1;
                     finally
-                      FreeAndNil(FLogin);
-                      UsuarioP:= queryProfessor.Fields[0].Value;
+                      //FreeAndNil(FLogin);
+                      //UsuarioP:= queryProfessor.Fields[0].Value;
                     end;
-                    FPrincipal.TabControl.TabIndex:= 1;
-                    UsuarioP:= queryProfessor.Fields[0].Value;
+                    //FPrincipal.TabControl.TabIndex:= 1;
+                    //UsuarioP:= queryProfessor.Fields[0].Value;
                   end
                 else
                   queryProfessor.SQL.Clear;
@@ -133,13 +133,13 @@ begin
                 if (queryAluno.Fields[0].AsInteger > 0) then
                   begin
                     try
-                      Application.CreateForm(TFPrincipal, FPrincipal);
-                      UsuarioA:= queryAluno.Fields[0].Value;
+                      //Application.CreateForm(TFPrincipal, FPrincipal);
+                      //UsuarioA:= queryAluno.Fields[0].Value;
 
                       FPrincipal.Show;
                       FPrincipal.TabControl.TabIndex:= 0;
                     finally
-                      FreeAndNil(FLogin);
+                      //FreeAndNil(FLogin);
                     end;
                   end
                 else
