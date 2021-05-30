@@ -48,8 +48,10 @@ type
     edtSenha: TEdit;
     layImgSenha: TLayout;
     layVisualizacaoSenha: TLayout;
+    btnEntradaRapida: TButton;
     procedure btnEntrarClick(Sender: TObject);
     procedure imgVisualizacaoSenhaClick(Sender: TObject);
+    procedure btnEntradaRapidaClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -68,6 +70,13 @@ implementation
 {$R *.NmXhdpiPh.fmx ANDROID}
 
 uses UModulo, UPrincipal;
+
+procedure TFLogin.btnEntradaRapidaClick(Sender: TObject);
+begin
+  edtUsuario.text:= '1';
+  edtSenha.text:= '123';
+  btnEntrarClick(Sender);
+end;
 
 procedure TFLogin.btnEntrarClick(Sender: TObject);
 var

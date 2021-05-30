@@ -5,7 +5,7 @@
     </ProjectExtensions>
     <PropertyGroup>
         <DeviceId Condition="'$(Platform)'=='Android'">2a2f9667</DeviceId>
-        <DeviceId Condition="'$(Platform)'=='Android64'">2a2f9667</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='Android64'"/>
     </PropertyGroup>
     <ItemGroup Condition="'$(Platform)'=='Win32'">
         <DeployFile Include="..\desktop\exe\FrequencyControl.exe" Condition="'$(Config)'=='Debug'">
@@ -30,19 +30,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\android\debug\classes.dex" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>FrequencyControl\classes\</RemoteDir>
-            <RemoteName>classes.dex</RemoteName>
-            <DeployClass>AndroidClassesDexFile</DeployClass>
+        <DeployFile Include="..\android\debug\styles-v21.xml" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>FrequencyControl\res\values-v21\</RemoteDir>
+            <RemoteName>styles.xml</RemoteName>
+            <DeployClass>AndroidSplashStylesV21</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="..\android\debug\styles-v21.xml" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>FrequencyControl\res\values-v21\</RemoteDir>
-            <RemoteName>styles.xml</RemoteName>
-            <DeployClass>AndroidSplashStylesV21</DeployClass>
+        <DeployFile Include="..\android\debug\classes.dex" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>FrequencyControl\classes\</RemoteDir>
+            <RemoteName>classes.dex</RemoteName>
+            <DeployClass>AndroidClassesDexFile</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>

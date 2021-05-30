@@ -119,6 +119,8 @@ type
     lbCancelar: TLabel;
     TimerDateTime: TTimer;
     TimerDadosQR: TTimer;
+    Layout1: TLayout;
+    Memo1: TMemo;
     procedure FormActivate(Sender: TObject);
     procedure imgMenuClick(Sender: TObject);
     procedure bckGrndEscuroClick(Sender: TObject);
@@ -131,6 +133,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure horaAula;
     procedure FormDestroy(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
     FQRCodeBitMap: TBitMap;
@@ -156,6 +160,7 @@ implementation
 {$R *.LgXhdpiPh.fmx ANDROID}
 {$R *.NmXhdpiPh.fmx ANDROID}
 {$R *.SmXhdpiPh.fmx ANDROID}
+{$R *.LgXhdpiTb.fmx ANDROID}
 
 uses ULogin, UModulo;
 
@@ -177,6 +182,16 @@ begin
       //Generation of initial information for the QR Code
       //getFieldIndex(Sender);
     end;
+  
+end;
+
+procedure TFPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  {$IFDEF MSWINDOWS}
+    application.Terminate;
+  {$ELSE}
+
+  {$ENDIF}
 end;
 
 procedure TFPrincipal.FormCreate(Sender: TObject);
@@ -279,19 +294,26 @@ begin
         queryAula.SQL.Add('SELECT * FROM AULA WHERE ID_TURMA = ' + queryAluno.fields[1].asstring);
         queryAula.Open;
 
-        //Creating the QR Code list component
+        //Creating QR Code list component
         FStrDados:= TSTringList.Create;
 
-        //Creation the QR Code image component
+        //Creation QR Code image component
         FQRCodeBitMap:=  TBitMap.Create;
 
         //Generates new information for the new QR Code every 3 minutes
         getFieldIndex(Sender);
 
         {$IFDEF MSWINDOWS}
+          //Creating Desktop QR Code
           QRCodeWin(imgQRCode, FStrDados.Text);
         {$ELSE}
+          //Creating mobile QR Code
           QRCodeMobile(imgQRCode, FStrDados.Text);
+          //Hiding testing button for quick entry into the system
+          FLogin.btnEntradaRapida.Visible:= false;
+          //Hiding testing memo for view the size layout
+          memo1.Visible:= false;
+
         {$ENDIF}
       end;
     end;
@@ -302,6 +324,34 @@ begin
   //Destroy QR Code
   FQRCodeBitMap.DisposeOf;
   FStrDados.DisposeOf;
+end;
+
+procedure TFPrincipal.FormResize(Sender: TObject);
+begin
+  //Align
+  if FPrincipal.Width <= 382 then
+    begin
+      //"ALUNO" name
+      lbNomeAluno.TextSettings.VertAlign:= TTextAlign.Leading;
+      lbNomeAluno.font.Size:= 16;
+
+      //"PROFESSOR" name
+      lbProfessorAluno.TextSettings.VertAlign:= TTextAlign.Leading;
+      lbProfessorAluno.font.Size:= 12;
+
+
+    end;
+  if FPrincipal.Width <= 395 then
+    begin
+      //Current DateTime
+      lbDiaAtual.Font.Size:= 10;
+      bckGrndDiaAtual.Margins.Top:= 4;
+      bckGrndDiaAtual.Margins.bottom:= 4;
+    end;
+
+  memo1.Lines.Clear;
+  memo1.Lines.Add(inttostr(FPrincipal.Width));
+
 end;
 
 procedure TFPrincipal.getFieldIndex(Sender: TObject);
@@ -610,7 +660,7 @@ begin
   try
     QRCode.Data := '  ' + texto;
     QRCode.Encoding := TQRCodeEncoding.qrAuto;
-    QRCode.QuietZone := 4;
+    QRCode.QuietZone := 2;
     pixelCount := GetPixelCount(imgQRCode.Width, imgQRCode.Height);
 
     case imgQRCode.WrapMode of
@@ -694,7 +744,7 @@ begin
   try
     QRCode.Data := texto;
     QRCode.Encoding := TQRCodeEncoding.qrAuto;
-    QRCode.QuietZone := 4;
+    QRCode.QuietZone := 1;
     imgQRCode.Bitmap.SetSize(QRCode.Rows, QRCode.Columns);
 
     for Row := 0 to QRCode.Rows - 1 do

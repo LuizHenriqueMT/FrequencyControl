@@ -53,7 +53,7 @@
     <Transaction>2021/05/24 02:46:27.000.103,=G:\Programacao\Repositorio\Delphi\Frequency Control\src\.pas\FMXDelphiZXIngQRCode.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
-		<NoProfile iOSSimulator="iPhone" Android64="" Android="2a2f9667"/>
+		<NoProfile iOSSimulator="iPhone" Android64="" Android=""/>
 	</ActiveMobileDevice>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>
