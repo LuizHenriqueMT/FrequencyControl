@@ -3,9 +3,10 @@ program FrequencyControl;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  ULogin in '..\pas\ULogin.pas' {FLogin},
-  UPrincipal in '..\pas\UPrincipal.pas' {FPrincipal},
-  UModulo in '..\pas\UModulo.pas' {Modulo: TDataModule};
+  ULogin in '..\.pas\ULogin.pas' {FLogin},
+  UPrincipal in '..\.pas\UPrincipal.pas' {FPrincipal},
+  UModulo in '..\.pas\UModulo.pas' {Modulo: TDataModule},
+  FMXDelphiZXIngQRCode in '..\.pas\FMXDelphiZXIngQRCode.pas';
 
 {$R *.res}
 

@@ -57,7 +57,6 @@ type
     lbDiaAtual: TLabel;
     mvwAluno: TMultiView;
     Rectangle1: TRectangle;
-    Image1: TImage;
     tbProfessor: TTabItem;
     layProfessor: TLayout;
     topMenuProfessor: TRectangle;
@@ -84,12 +83,8 @@ type
     msgConfirmacaoTurmaIndevida: TLabel;
     layAcaoConfirmacaoTurma: TLayout;
     tbChamada: TTabItem;
-    retTopChamada: TRectangle;
-    layMenuChamada: TLayout;
-    menuChamada: TImage;
     topMenuAluno: TRectangle;
     layMenuAluno: TLayout;
-    btnMenuAluno: TImage;
     mvwChamada: TMultiView;
     Image2: TImage;
     Rectangle3: TRectangle;
@@ -121,6 +116,10 @@ type
     TimerDadosQR: TTimer;
     Layout1: TLayout;
     Memo1: TMemo;
+    btnMenuAluno: TImage;
+    topMenuChamada: TRectangle;
+    layMenuChamada: TLayout;
+    btnMenuChamada: TImage;
     procedure FormActivate(Sender: TObject);
     procedure imgMenuClick(Sender: TObject);
     procedure bckGrndEscuroClick(Sender: TObject);
@@ -336,12 +335,12 @@ begin
       lbNomeAluno.font.Size:= 16;
 
       //"PROFESSOR" name
-      lbProfessorAluno.TextSettings.VertAlign:= TTextAlign.Leading;
       lbProfessorAluno.font.Size:= 12;
 
-
+      //"DISCIPLINA" name
+      lbDisciplinaAluno.font.Size:= 12;
     end;
-  if FPrincipal.Width <= 395 then
+  if FPrincipal.Width <= 414 then
     begin
       //Current DateTime
       lbDiaAtual.Font.Size:= 10;
@@ -704,7 +703,7 @@ begin
                             if (QRCode.IsBlack[Row, Column]) then
                               pixelColor := TAlphaColors.Black
                             else
-                              pixelColor := TAlphaColors.White;
+                              pixelColor := TAlphaColors.null;
 
                               columnPixel := Column * pixelCount;
                               rowPixel := Row * pixelCount;
@@ -754,7 +753,7 @@ begin
             if (QRCode.IsBlack[Row, Column]) then
                 pixelColor := TAlphaColors.Black
             else
-                pixelColor := TAlphaColors.White;
+                pixelColor := TAlphaColors.Null;
 
             if imgQRCode.Bitmap.Map(TMapAccess.maWrite, vBitMapData)  then
               try
