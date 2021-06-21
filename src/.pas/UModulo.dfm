@@ -8,7 +8,7 @@ object Modulo: TModulo
     Port = 3306
     Database = 'frequencycontrol'
     Username = 'luiztiscoski'
-    Server = '187.107.106.99'
+    Server = 'tiscoski.ddns.net'
     Connected = True
     LoginPrompt = False
     Left = 40

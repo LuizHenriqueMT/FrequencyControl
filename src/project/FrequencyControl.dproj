@@ -6,7 +6,7 @@
         <MainSource>FrequencyControl.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Android</Platform>
         <TargetedPlatforms>32787</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
@@ -190,6 +190,11 @@
         <Android_SplashTileMode>clamp</Android_SplashTileMode>
         <DCC_DcuOutput>..\android\debug\dcu\</DCC_DcuOutput>
         <DCC_ExeOutput>..\android\debug\</DCC_ExeOutput>
+        <Android_LauncherIcon36>..\..\img\logo\36p.png</Android_LauncherIcon36>
+        <Android_LauncherIcon48>..\..\img\logo\48p.png</Android_LauncherIcon48>
+        <Android_LauncherIcon72>..\..\img\logo\72p.png</Android_LauncherIcon72>
+        <Android_LauncherIcon96>..\..\img\logo\96p.png</Android_LauncherIcon96>
+        <Android_LauncherIcon144>..\..\img\logo\146p.png</Android_LauncherIcon144>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Android64)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
@@ -212,6 +217,9 @@
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>..\..\img\logo\36p.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -290,6 +298,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\android\debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile">
+                    <Platform Name="Android">
+                        <RemoteName>classes.dex</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
@@ -332,7 +346,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\strings.xml" Configuration="Debug" Class="Android_Strings">
+                <DeployFile LocalName="..\android\debug\strings.xml" Configuration="Debug" Class="Android_Strings">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -366,7 +380,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
+                <DeployFile LocalName="..\android\debug\styles.xml" Configuration="Debug" Class="AndroidSplashStyles">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -465,7 +479,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\libFrequencyControl.so" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\android\debug\libFrequencyControl.so" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteName>libFrequencyControl.so</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -477,7 +491,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
+                <DeployFile LocalName="..\android\debug\AndroidManifest.xml" Configuration="Debug" Class="ProjectAndroidManifest">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -538,7 +552,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
+                <DeployFile LocalName="..\android\debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
                     <Platform Name="Android">
                         <RemoteName>styles.xml</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -556,13 +570,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
+                <DeployFile LocalName="..\android\debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
                     <Platform Name="Android">
                         <Enabled>false</Enabled>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="android\debug\cfg\colors.xml" Configuration="Debug" Class="Android_Colors">
+                <DeployFile LocalName="..\android\debug\colors.xml" Configuration="Debug" Class="Android_Colors">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
