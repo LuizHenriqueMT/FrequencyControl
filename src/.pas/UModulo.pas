@@ -29,7 +29,6 @@ type
     queryDP: TUniQuery;
     queryDisciplina: TUniQuery;
     queryDate: TUniQuery;
-    queryTimeCurTime: TTimeField;
     queryDateCurDate: TDateField;
     queryNull: TUniQuery;
     queryNullMATRICULA_ALUNO: TIntegerField;
@@ -42,6 +41,29 @@ type
     queryNullSTATUS_ALUNO: TStringField;
     queryNullSENHA_ALUNO: TStringField;
     queryNullEMAIL_ALUNO: TStringField;
+    queryASSOCPDID_AULA: TIntegerField;
+    queryASSOCPDID_ASSOCPD: TIntegerField;
+    queryASSOCPDID_TURMA: TIntegerField;
+    queryASSOCPDPERIODO_AULA: TStringField;
+    queryASSOCPDAULAORDINAL_AULA: TStringField;
+    queryASSOCPDHORARIO_AULA: TTimeField;
+    queryASSOCPDDIASEMANA_AULA: TStringField;
+    queryASSOCPDMATRICULA_PROFESSOR: TIntegerField;
+    queryASSOCPDNOME_PROFESSOR: TStringField;
+    queryASSOCPDID_MATERIA: TIntegerField;
+    queryASSOCPDNOME_DISCIPLINA: TStringField;
+    queryAulaPID_AULA: TIntegerField;
+    queryAulaPID_ASSOCPD: TIntegerField;
+    queryAulaPID_TURMA: TIntegerField;
+    queryAulaPPERIODO_AULA: TStringField;
+    queryAulaPAULAORDINAL_AULA: TStringField;
+    queryAulaPHORARIO_AULA: TTimeField;
+    queryAulaPDIASEMANA_AULA: TStringField;
+    queryAulaPMATRICULA_PROFESSOR: TIntegerField;
+    queryAulaPNOME_PROFESSOR: TStringField;
+    queryAulaPID_MATERIA: TIntegerField;
+    queryAulaPNOME_DISCIPLINA: TStringField;
+    queryNullCOLUMN_NAME: TStringField;
     queryAlunoMATRICULA_ALUNO: TIntegerField;
     queryAlunoID_TURMA: TIntegerField;
     queryAlunoNOME_ALUNO: TStringField;
@@ -75,29 +97,8 @@ type
     queryDisciplinaNOME_DISCIPLINA: TStringField;
     queryDisciplinaNUCLEO_DISCIPLINA: TStringField;
     queryDisciplinaFLAG_DISCIPLINA: TStringField;
-    queryASSOCPDID_AULA: TIntegerField;
-    queryASSOCPDID_ASSOCPD: TIntegerField;
-    queryASSOCPDID_TURMA: TIntegerField;
-    queryASSOCPDPERIODO_AULA: TStringField;
-    queryASSOCPDAULAORDINAL_AULA: TStringField;
-    queryASSOCPDHORARIO_AULA: TTimeField;
-    queryASSOCPDDIASEMANA_AULA: TStringField;
-    queryASSOCPDMATRICULA_PROFESSOR: TIntegerField;
-    queryASSOCPDNOME_PROFESSOR: TStringField;
-    queryASSOCPDID_MATERIA: TIntegerField;
-    queryASSOCPDNOME_DISCIPLINA: TStringField;
-    queryAulaPID_AULA: TIntegerField;
-    queryAulaPID_ASSOCPD: TIntegerField;
-    queryAulaPID_TURMA: TIntegerField;
-    queryAulaPPERIODO_AULA: TStringField;
-    queryAulaPAULAORDINAL_AULA: TStringField;
-    queryAulaPHORARIO_AULA: TTimeField;
-    queryAulaPDIASEMANA_AULA: TStringField;
-    queryAulaPMATRICULA_PROFESSOR: TIntegerField;
-    queryAulaPNOME_PROFESSOR: TStringField;
-    queryAulaPID_MATERIA: TIntegerField;
-    queryAulaPNOME_DISCIPLINA: TStringField;
-    queryNullCOLUMN_NAME: TStringField;
+    queryTimeCurTime: TTimeField;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,5 +113,17 @@ implementation
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TModulo.DataModuleCreate(Sender: TObject);
+begin
+  //Database connection initialization
+  Conexao.Connected:= true;
+
+  //Query database initialization
+  queryNow.open;
+  queryTime.Open;
+  queryDate.open;
+  queryAula.Open;
+end;
 
 end.

@@ -52,6 +52,7 @@ type
     procedure btnEntrarClick(Sender: TObject);
     procedure imgVisualizacaoSenhaClick(Sender: TObject);
     procedure btnEntradaRapidaClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
 
   private
     { Private declarations }
@@ -166,6 +167,16 @@ begin
               exit
             end;
         end;
+    end;
+end;
+
+procedure TFLogin.FormActivate(Sender: TObject);
+begin
+  //Server connection error
+  if modulo.conexao.Connected = false then
+    begin
+      showmessage ('O servidor está offline. Por favor entrar em ' +
+                   'contato com luizh.mtiscoski@hotmail.com');
     end;
 end;
 

@@ -1,20 +1,21 @@
 object Modulo: TModulo
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 519
   Width = 585
   object Conexao: TUniConnection
     ProviderName = 'MySQL'
     Port = 3306
-    Database = 'FrequencyControl'
+    Database = 'frequencycontrol'
     Username = 'luiztiscoski'
-    Server = 'frequencycontrol.cqcsqj87hfrd.us-east-2.rds.amazonaws.com'
+    Server = '187.107.106.99'
     Connected = True
     LoginPrompt = False
     Left = 40
     Top = 40
     EncryptedPassword = 
-      '93FF8AFF96FF85FF98FF9EFF8BFF90FFCEFFCFFFCFFFCEFFDCFFC8FFCEFF97FF' +
-      '9BFF'
+      'A8FF96FF93FF93FF96FF9EFF92FF98FF9EFF8BFF90FFCEFFCFFFCFFFCEFFDCFF' +
+      'C8FFCEFF97FF9BFF'
   end
   object ProviderAluno: TMySQLUniProvider
     Left = 264
@@ -35,7 +36,6 @@ object Modulo: TModulo
     SQL.Strings = (
       'Select * from ALUNO'
       '')
-    Active = True
     Left = 40
     Top = 104
     object queryAlunoMATRICULA_ALUNO: TIntegerField
@@ -44,11 +44,9 @@ object Modulo: TModulo
     end
     object queryAlunoID_TURMA: TIntegerField
       FieldName = 'ID_TURMA'
-      Required = True
     end
     object queryAlunoNOME_ALUNO: TStringField
       FieldName = 'NOME_ALUNO'
-      Required = True
       Size = 45
     end
     object queryAlunoNASC_ALUNO: TDateField
@@ -57,30 +55,25 @@ object Modulo: TModulo
     end
     object queryAlunoCPF_ALUNO: TStringField
       FieldName = 'CPF_ALUNO'
-      Required = True
       FixedChar = True
       Size = 11
     end
     object queryAlunoLIDER_ALUNO: TStringField
       FieldName = 'LIDER_ALUNO'
-      Required = True
       Size = 5
     end
     object queryAlunoSEXO_ALUNO: TStringField
       FieldName = 'SEXO_ALUNO'
-      Required = True
       FixedChar = True
       Size = 1
     end
     object queryAlunoSTATUS_ALUNO: TStringField
       FieldName = 'STATUS_ALUNO'
-      Required = True
       FixedChar = True
       Size = 3
     end
     object queryAlunoSENHA_ALUNO: TStringField
       FieldName = 'SENHA_ALUNO'
-      Required = True
       Size = 8
     end
     object queryAlunoEMAIL_ALUNO: TStringField
@@ -102,7 +95,6 @@ object Modulo: TModulo
     SQL.Strings = (
       'Select *'
       'From PROFESSOR')
-    Active = True
     Left = 120
     Top = 104
     object queryProfessorMATRICULA_PROFESSOR: TIntegerField
@@ -143,9 +135,8 @@ object Modulo: TModulo
   object queryNow: TUniQuery
     Connection = Conexao
     SQL.Strings = (
-      'SET time_zone = '#39'-2:59'#39';'
+      ''
       'Select now();')
-    Active = True
     Left = 192
     Top = 312
     object queryNownow: TDateTimeField
@@ -184,7 +175,6 @@ object Modulo: TModulo
       'PERIODO_AULA = :pPeriodo AND'
       'ID_TURMA = :pTurma AND'
       'HORARIO_AULA = :pHorario')
-    Active = True
     Left = 40
     Top = 312
     ParamData = <
@@ -282,7 +272,6 @@ object Modulo: TModulo
       'PERIODO_AULA = :pPeriodo AND'
       'HORARIO_AULA = :pHorario AND'
       'p.MATRICULA_PROFESSOR = :pProfessor')
-    Active = True
     Left = 120
     Top = 312
     ParamData = <
@@ -358,9 +347,7 @@ object Modulo: TModulo
   object queryTime: TUniQuery
     Connection = Conexao
     SQL.Strings = (
-      'SET time_zone = '#39'-2:59'#39';'
       'Select CurTime();')
-    Active = True
     Left = 264
     Top = 312
     object queryTimeCurTime: TTimeField
@@ -375,7 +362,6 @@ object Modulo: TModulo
       'Select *'
       'From AULA'
       'WHERE ID_TURMA = 353')
-    Active = True
     Left = 193
     Top = 104
     object queryAulaID_AULA: TIntegerField
@@ -426,7 +412,6 @@ object Modulo: TModulo
     Connection = Conexao
     SQL.Strings = (
       'SELECT * FROM ASSOCIACAO_PROFESSOR_DISCIPLINA ')
-    Active = True
     Left = 264
     Top = 104
     object queryDPID_ASSOCPD: TIntegerField
@@ -449,7 +434,6 @@ object Modulo: TModulo
     Connection = Conexao
     SQL.Strings = (
       'Select * From DISCIPLINAS')
-    Active = True
     Left = 336
     Top = 104
     object queryDisciplinaID_MATERIA: TIntegerField
@@ -474,9 +458,8 @@ object Modulo: TModulo
   object queryDate: TUniQuery
     Connection = Conexao
     SQL.Strings = (
-      'SET time_zone = '#39'-2:59'#39';'
+      ''
       'Select CurDate();')
-    Active = True
     Left = 336
     Top = 312
     object queryDateCurDate: TDateField

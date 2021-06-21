@@ -12,8 +12,8 @@ uses
 
 begin
   Application.Initialize;
-  Application.CreateForm(TModulo, Modulo);
   Application.CreateForm(TFLogin, FLogin);
+  Application.CreateForm(TModulo, Modulo);
   //Application.CreateForm(TFPrincipal, FPrincipal);
 
   Application.Run;

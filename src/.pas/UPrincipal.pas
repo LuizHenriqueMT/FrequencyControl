@@ -218,13 +218,8 @@ begin
       //Add the current time into the variable
       HorarioAtual:= queryTime.Fields[0].AsDateTime;
 
+      //Initial record of the table
       queryAula.First;
-
-      //Activate the current DateTime query
-      queryNow.open;
-
-      //Activate the current Time query
-      queryTime.Open;
 
       //DateTime Formatting
       DataQR:= queryNow.Fields[0].AsDateTime;
