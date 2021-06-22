@@ -58,6 +58,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure CriarContaFirebase;
+    function DoLogin: boolean;
   end;
 
 var
@@ -168,6 +170,16 @@ begin
             end;
         end;
     end;
+end;
+
+procedure TFLogin.CriarContaFirebase;
+begin
+
+end;
+
+function TFLogin.DoLogin: boolean;
+begin
+
 end;
 
 procedure TFLogin.FormActivate(Sender: TObject);

@@ -350,28 +350,20 @@ end;
 
 procedure TFPrincipal.getFieldIndex(Sender: TObject);
 var
-  DadosAlunoQR: array [0..10] of string;
+  DadosAlunoQR: array [0..1] of string;
   I: integer;
 begin
   with modulo do
     begin
       FStrDados.Clear;
       //Saves "ALUNO" information in an array to generate the QR Code
-      for I:= 0 to 9 do
-        begin
-          if (queryAluno.Fields[I].IsNull = false) then
-            begin
-              DadosAlunoQR[I]:= queryAluno.Fields[I].AsString;
-              FStrDados.Add(DadosAlunoQR[I]);
-            end
-          else
-            FStrDados.Add('-');
-        end;
-
-      //Saves the current "DateTime" in the same array to generate the QR Code
-      queryNow.Open;
-      DadosAlunoQR[10]:= DateTimeToStr(queryNow.Fields[0].value);
-      FStrDados.add(DadosAlunoQR[10]);
+        if (queryAluno.Fields[0].IsNull = false) then
+          begin
+              DadosAlunoQR[0]:= queryAluno.Fields[0].AsString;
+              DadosAlunoQR[1]:= queryAluno.Fields[2].AsString;
+              FStrDados.Add(DadosAlunoQR[0]);
+              FStrDados.Add(DadosAlunoQR[1]);
+          end
     end;
 end;
 
